@@ -1,0 +1,6 @@
+Id,Surname,Name,DateOfBirth,PhoneNumber,Email,PersonalIdNumber,Title,YearsOfExperience,Subjects
+1,Brown,Thomas,1975-06-13,+1234567800,thomas.brown@example.com,123456789,Professor,20,1,2
+2,Anderson,Patricia,1980-09-01,+1234567801,patricia.anderson@example.com,234567890,Associate Professor,15,3,4
+3,Clark,James,1973-12-22,+1234567802,james.clark@example.com,345678901,Professor,25,5
+4,Harris,Alice,1985-05-16,+1234567803,alice.harris@example.com,456789012,Assistant Professor,10,6,7
+5,Martin,Daniel,1978-03-29,+1234567804,daniel.martin@example.com,567890123,Professor,18,8

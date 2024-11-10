@@ -1,8 +1,8 @@
-﻿using System;
+﻿using SSluzba.Models;
+using SSluzba.Observer;
+using SSluzba.Repositories;
 using System.Collections.Generic;
 using System.Linq;
-using SSluzba.Models;
-using SSluzba.Observer;
 
 namespace SSluzba.DAO
 {
@@ -10,10 +10,12 @@ namespace SSluzba.DAO
     {
         private List<Student> _students;
         private List<IObserver> _observers;
+        private StudentRepository _repository;
 
         public StudentDAO()
         {
-            _students = new List<Student>();
+            _repository = new StudentRepository();
+            _students = _repository.LoadStudents();
             _observers = new List<IObserver>();
         }
 
@@ -26,12 +28,14 @@ namespace SSluzba.DAO
         {
             student.Id = NextId();
             _students.Add(student);
+            _repository.SaveStudents(_students);
             NotifyObservers();
         }
 
         public void Remove(Student student)
         {
             _students.Remove(student);
+            _repository.SaveStudents(_students);
             NotifyObservers();
         }
 
@@ -49,6 +53,7 @@ namespace SSluzba.DAO
                 existingStudent.CurrentYear = updatedStudent.CurrentYear;
                 existingStudent.Status = updatedStudent.Status;
                 existingStudent.AverageGrade = updatedStudent.AverageGrade;
+                _repository.SaveStudents(_students);
                 NotifyObservers();
             }
         }

@@ -9,8 +9,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Data\" />
     <Folder Include="Views\Subject\" />
     <Folder Include="Views\Professor\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Data\students.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
