@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace SSluzba.Models
 {
-    public class Index
+    public class Index : INotifyPropertyChanged
     {
         public int Id { get; set; }
 
@@ -87,7 +87,7 @@ namespace SSluzba.Models
 
         public override string ToString()
         {
-            return $"ID: {Id}, Major Code: {MajorCode}, Enrollment Number: {EnrollmentNumber}, Enrollment Year: {EnrollmentYear}";
+            return $"{MajorCode}{EnrollmentNumber}/{EnrollmentYear}";
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

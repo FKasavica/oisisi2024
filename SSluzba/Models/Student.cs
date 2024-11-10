@@ -92,7 +92,19 @@ namespace SSluzba.Models
             }
         }
 
-        //Index, class needed
+        private int _indexId;
+        public int IndexId
+        {
+            get => _indexId;
+            set
+            {
+                if (value != _indexId)
+                {
+                    _indexId = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         private int _currentYear;
         public int CurrentYear
@@ -138,7 +150,7 @@ namespace SSluzba.Models
 
         public Student() { }
 
-        public Student(int id, string surname, string name, DateTime dateOfBirth, string phoneNumber, string email, int currentYear, Status status, double averageGrade)
+        public Student(int id, string surname, string name, DateTime dateOfBirth, string phoneNumber, string email, int indexId, int currentYear, Status status, double averageGrade)
         {
             Id = id;
             Surname = surname;
@@ -146,6 +158,7 @@ namespace SSluzba.Models
             DateOfBirth = dateOfBirth;
             PhoneNumber = phoneNumber;
             Email = email;
+            IndexId = indexId;
             CurrentYear = currentYear;
             Status = status;
             AverageGrade = averageGrade;
@@ -161,6 +174,7 @@ namespace SSluzba.Models
             DateOfBirth.ToString("yyyy-MM-dd"),
             PhoneNumber,
             Email,
+            IndexId.ToString(),
             CurrentYear.ToString(),
             Status.ToString(),
             AverageGrade.ToString()
@@ -176,15 +190,16 @@ namespace SSluzba.Models
             DateOfBirth = DateTime.ParseExact(values[3], "yyyy-MM-dd", null);
             PhoneNumber = values[4];
             Email = values[5];
-            CurrentYear = int.Parse(values[6]);
-            Status = (Status)Enum.Parse(typeof(Status), values[7]);
-            AverageGrade = double.Parse(values[8]);
+            IndexId = int.Parse(values[6]);
+            CurrentYear = int.Parse(values[7]);
+            Status = (Status)Enum.Parse(typeof(Status), values[8]);
+            AverageGrade = double.Parse(values[9]);
         }
 
         public override string ToString()
         {
             return $"ID: {Id}, Name: {Name} {Surname}, Date of Birth: {DateOfBirth:yyyy-MM-dd}, " +
-                   $"Phone: {PhoneNumber}, Email: {Email}, Current Year: {CurrentYear}, " +
+                   $"Phone: {PhoneNumber}, Email: {Email}, IndexId: {IndexId}, Current Year: {CurrentYear}, " +
                    $"Status: {Status}, Average Grade: {AverageGrade:F2}";
         }
 

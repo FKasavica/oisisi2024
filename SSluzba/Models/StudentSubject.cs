@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace SSluzba.Models
 {
-    public class StudentSubjectStatus : INotifyPropertyChanged
+    public class StudentSubject : INotifyPropertyChanged
     {
         public int Id { get; set; }
 
@@ -56,9 +56,9 @@ namespace SSluzba.Models
             }
         }
 
-        public StudentSubjectStatus() { }
+        public StudentSubject() { }
 
-        public StudentSubjectStatus(int id, int studentId, int subjectId, bool passed)
+        public StudentSubject(int id, int studentId, int subjectId, bool passed)
         {
             Id = id;
             StudentId = studentId;
