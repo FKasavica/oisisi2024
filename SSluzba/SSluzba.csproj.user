@@ -5,16 +5,25 @@
     <Compile Update="Views\AddDepartmentView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\AddExamGradeView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\AddStudentView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\DepartmentView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\ExamGradesView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\StudentView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\UpdateDepartementView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\UpdateExamGrade.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\UpdateStudentView.xaml.cs">
@@ -25,16 +34,25 @@
     <Page Update="Views\AddDepartmentView.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Views\AddExamGradeView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\AddStudentView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\DepartmentView.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Views\ExamGradesView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\StudentView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\UpdateDepartementView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\UpdateExamGrade.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\UpdateStudentView.xaml">

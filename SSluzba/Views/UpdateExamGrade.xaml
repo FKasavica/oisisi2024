@@ -1,0 +1,28 @@
+﻿<Window x:Class="SSluzba.Views.UpdateExamGradeView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Update Exam Grade" Height="300" Width="400">
+    <Grid>
+        <StackPanel Margin="10">
+            <TextBlock Text="Grade ID:" />
+            <TextBox x:Name="GradeIdInput" IsReadOnly="True" />
+
+            <TextBlock Text="Student ID:" />
+            <TextBox x:Name="StudentIdInput" IsReadOnly="True" />
+
+            <TextBlock Text="Subject ID:" />
+            <TextBox x:Name="SubjectIdInput" IsReadOnly="True" />
+
+            <TextBlock Text="Numeric Grade:" />
+            <TextBox x:Name="NumericGradeInput" />
+
+            <TextBlock Text="Exam Date:" />
+            <DatePicker x:Name="ExamDateInput" />
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
+                <Button Content="OK" Width="75" Margin="5" Click="OkButton_Click" />
+                <Button Content="Cancel" Width="75" Margin="5" Click="CancelButton_Click" />
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>

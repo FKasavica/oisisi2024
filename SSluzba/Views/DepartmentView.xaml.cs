@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Windows;
 using SSluzba.Controllers;
 using SSluzba.Models;
+using SSluzba.Observer;
 
 namespace SSluzba.Views
 {
-    public partial class DepartmentView : Window
+    public partial class DepartmentView : Window, IObserver
     {
         private DepartmentController _controller;
 
@@ -14,6 +15,12 @@ namespace SSluzba.Views
         {
             InitializeComponent();
             _controller = new DepartmentController();
+            _controller.Subscribe(this);
+            RefreshDepartmentList();
+        }
+
+        public void Update()
+        {
             RefreshDepartmentList();
         }
 
@@ -29,7 +36,6 @@ namespace SSluzba.Views
             if (addDepartmentWindow.ShowDialog() == true)
             {
                 _controller.AddDepartment(addDepartmentWindow.Department.DepartmentCode, addDepartmentWindow.Department.DepartmentName, addDepartmentWindow.Department.HeadOfDepartmentId, addDepartmentWindow.Department.ProfessorIdList);
-                RefreshDepartmentList();
             }
         }
 
@@ -40,8 +46,7 @@ namespace SSluzba.Views
                 UpdateDepartmentView updateDepartmentWindow = new UpdateDepartmentView(selectedDepartment);
                 if (updateDepartmentWindow.ShowDialog() == true)
                 {
-                    _controller.UpdateDepartment(updateDepartmentWindow.Department.Id, updateDepartmentWindow.Department.DepartmentCode, updateDepartmentWindow.Department.DepartmentName, updateDepartmentWindow.Department.HeadOfDepartmentId, updateDepartmentWindow.Department.ProfessorIdList);
-                    RefreshDepartmentList();
+                    _controller.UpdateDepartment(updateDepartmentWindow.Department);
                 }
             }
             else
@@ -55,7 +60,6 @@ namespace SSluzba.Views
             if (DepartmentDataGrid.SelectedItem is Department selectedDepartment)
             {
                 _controller.DeleteDepartment(selectedDepartment.Id);
-                RefreshDepartmentList();
             }
             else
             {

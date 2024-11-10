@@ -10,12 +10,14 @@ namespace SSluzba.Views
     public partial class StudentView : Window, IObserver
     {
         private StudentController _controller;
+        private ExamGradeController _examGradeController;
 
         public StudentView() : base()
         {
             InitializeComponent();
-            _controller.Subscribe(this);
             _controller = new StudentController();
+            _controller.Subscribe(this);
+            _examGradeController = new ExamGradeController();
             RefreshStudentList();
         }
 
@@ -46,7 +48,7 @@ namespace SSluzba.Views
             if (StudentDataGrid.SelectedItem is Student selectedStudent)
             {
                 // Otvaranje prozora za ažuriranje studenta
-                AddStudentView updateStudentWindow = new AddStudentView(selectedStudent);
+                UpdateStudentView updateStudentWindow = new UpdateStudentView(selectedStudent);
                 if (updateStudentWindow.ShowDialog() == true)
                 {
                     // Ažuriraj studenta
@@ -68,6 +70,19 @@ namespace SSluzba.Views
             else
             {
                 MessageBox.Show("Please select a student to delete.", "Delete Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void ManageExamGradesButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (StudentDataGrid.SelectedItem is Student selectedStudent)
+            {
+                ExamGradesView examGradesView = new ExamGradesView(selectedStudent.Id);
+                examGradesView.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("Please select a student to manage exam grades.", "Manage Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

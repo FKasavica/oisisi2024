@@ -1,0 +1,25 @@
+﻿<Window x:Class="SSluzba.Views.AddExamGradeView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Add Exam Grade" Height="300" Width="400">
+    <Grid Margin="10">
+        <StackPanel>
+            <Label Content="Student ID:" />
+            <TextBox x:Name="StudentIdInput" Width="200" IsReadOnly="True" />
+
+            <Label Content="Subject ID:" />
+            <TextBox x:Name="SubjectIdInput" Width="200" IsReadOnly="True" />
+
+            <Label Content="Grade (6-10):" />
+            <TextBox x:Name="NumericGradeInput" Width="200" />
+
+            <Label Content="Exam Date:" />
+            <DatePicker x:Name="ExamDateInput" Width="200" />
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+                <Button Content="OK" Width="80" Margin="5" Click="OkButton_Click" />
+                <Button Content="Cancel" Width="80" Margin="5" Click="CancelButton_Click" />
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>

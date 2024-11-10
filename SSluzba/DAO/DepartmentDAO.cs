@@ -2,47 +2,77 @@
 using System.Collections.Generic;
 using System.Linq;
 using SSluzba.Models;
+using SSluzba.Observer;
 
 namespace SSluzba.DAO
 {
-    public class DepartmentDAO
+    public class DepartmentDAO : ISubject
     {
+        private List<IObserver> _observers;
         private List<Department> _departments;
 
         public DepartmentDAO()
         {
             _departments = new List<Department>();
+            _observers = new List<IObserver>();
         }
 
-        public void AddDepartment(Department department)
+        public void Add(Department department)
         {
+            department.Id = GetNextId();
             _departments.Add(department);
+            NotifyObservers();
         }
 
-        public void UpdateDepartment(Department department)
+        public void Update(Department updatedDepartment)
         {
-            var existingDepartment = _departments.FirstOrDefault(d => d.Id == department.Id);
+            var existingDepartment = _departments.FirstOrDefault(d => d.Id == updatedDepartment.Id);
             if (existingDepartment != null)
             {
-                existingDepartment.DepartmentCode = department.DepartmentCode;
-                existingDepartment.DepartmentName = department.DepartmentName;
-                existingDepartment.HeadOfDepartmentId = department.HeadOfDepartmentId;
-                existingDepartment.ProfessorIdList = department.ProfessorIdList;
+                existingDepartment.DepartmentCode = updatedDepartment.DepartmentCode;
+                existingDepartment.DepartmentName = updatedDepartment.DepartmentName;
+                existingDepartment.HeadOfDepartmentId = updatedDepartment.HeadOfDepartmentId;
+                existingDepartment.ProfessorIdList = updatedDepartment.ProfessorIdList;
+                NotifyObservers();
             }
         }
 
-        public void RemoveDepartment(int id)
+        public void Remove(int id)
         {
             var department = _departments.FirstOrDefault(d => d.Id == id);
             if (department != null)
             {
                 _departments.Remove(department);
+                NotifyObservers();
             }
         }
 
-        public List<Department> GetAllDepartments()
+        public List<Department> GetAll()
         {
             return _departments;
+        }
+
+        private int GetNextId()
+        {
+            return _departments.Count == 0 ? 1 : _departments.Max(d => d.Id) + 1;
+        }
+
+        public void Subscribe(IObserver observer)
+        {
+            _observers.Add(observer);
+        }
+
+        public void Unsubscribe(IObserver observer)
+        {
+            _observers.Remove(observer);
+        }
+
+        public void NotifyObservers()
+        {
+            foreach (var observer in _observers)
+            {
+                observer.Update();
+            }
         }
     }
 }

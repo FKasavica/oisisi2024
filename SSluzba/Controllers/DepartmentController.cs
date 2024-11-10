@@ -1,5 +1,6 @@
 ﻿using SSluzba.DAO;
 using SSluzba.Models;
+using SSluzba.Observer;
 
 namespace SSluzba.Controllers
 {
@@ -12,6 +13,11 @@ namespace SSluzba.Controllers
             _departmentDAO = new DepartmentDAO();
         }
 
+        public void Subscribe(IObserver observer)
+        {
+            _departmentDAO.Subscribe(observer);
+        }
+
         public void AddDepartment(string departmentCode, string departmentName, int headOfDepartmentId, List<int> professorIdList)
         {
             var newDepartment = new Department
@@ -22,31 +28,22 @@ namespace SSluzba.Controllers
                 ProfessorIdList = professorIdList
             };
 
-            _departmentDAO.AddDepartment(newDepartment);
+            _departmentDAO.Add(newDepartment);
         }
 
-        public void UpdateDepartment(int id, string departmentCode, string departmentName, int headOfDepartmentId, List<int> professorIdList)
+        public void UpdateDepartment(Department updatedDepartment)
         {
-            var updatedDepartment = new Department
-            {
-                Id = id,
-                DepartmentCode = departmentCode,
-                DepartmentName = departmentName,
-                HeadOfDepartmentId = headOfDepartmentId,
-                ProfessorIdList = professorIdList
-            };
-
-            _departmentDAO.UpdateDepartment(updatedDepartment);
+            _departmentDAO.Update(updatedDepartment);
         }
 
         public void DeleteDepartment(int id)
         {
-            _departmentDAO.RemoveDepartment(id);
+            _departmentDAO.Remove(id);
         }
 
         public List<Department> GetAllDepartments()
         {
-            return _departmentDAO.GetAllDepartments();
+            return _departmentDAO.GetAll();
         }
     }
 }

@@ -16,5 +16,6 @@
         <Button Content="Add New Student" HorizontalAlignment="Left" Margin="10,220,0,0" VerticalAlignment="Top" Width="150" Click="AddStudentButton_Click"/>
         <Button Content="Update Student" HorizontalAlignment="Left" Margin="180,220,0,0" VerticalAlignment="Top" Width="150" Click="UpdateStudentButton_Click"/>
         <Button Content="Delete Student" HorizontalAlignment="Left" Margin="350,220,0,0" VerticalAlignment="Top" Width="150" Click="DeleteStudentButton_Click"/>
+        <Button Content="Manage Exam Grades" HorizontalAlignment="Left" Margin="520,220,0,0" VerticalAlignment="Top" Width="150" Click="ManageExamGradesButton_Click"/>
     </Grid>
 </Window>
