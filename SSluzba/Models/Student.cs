@@ -14,7 +14,7 @@ public enum Status
     SelfFinanced = 'S'
 }
 
-namespace SSluzba
+namespace SSluzba.Models
 {
     public class Student: INotifyPropertyChanged
     {
