@@ -90,7 +90,7 @@ namespace SSluzba.Models
 
         public string[] ToCSV()
         {
-            return new string[]
+            string[] csvValues =
             {
                 Id.ToString(),
                 StudentId.ToString(),
@@ -98,6 +98,7 @@ namespace SSluzba.Models
                 NumericGrade.ToString(),
                 ExamDate.ToString("yyyy-MM-dd")
             };
+            return csvValues;
         }
 
         public void FromCSV(string[] values)
