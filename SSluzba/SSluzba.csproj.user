@@ -2,60 +2,60 @@
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup />
   <ItemGroup>
-    <Compile Update="Views\AddDepartmentView.xaml.cs">
+    <Compile Update="Views\Department\AddDepartmentView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\AddExamGradeView.xaml.cs">
+    <Compile Update="Views\Exam\AddExamGradeView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\AddStudentView.xaml.cs">
+    <Compile Update="Views\Student\AddStudentView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\DepartmentView.xaml.cs">
+    <Compile Update="Views\Department\DepartmentView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\ExamGradesView.xaml.cs">
+    <Compile Update="Views\Exam\ExamGradesView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\StudentView.xaml.cs">
+    <Compile Update="Views\Student\StudentView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\UpdateDepartementView.xaml.cs">
+    <Compile Update="Views\Department\UpdateDepartementView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\UpdateExamGrade.xaml.cs">
+    <Compile Update="Views\Exam\UpdateExamGrade.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\UpdateStudentView.xaml.cs">
+    <Compile Update="Views\Student\UpdateStudentView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Views\AddDepartmentView.xaml">
+    <Page Update="Views\Department\AddDepartmentView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\AddExamGradeView.xaml">
+    <Page Update="Views\Exam\AddExamGradeView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\AddStudentView.xaml">
+    <Page Update="Views\Student\AddStudentView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\DepartmentView.xaml">
+    <Page Update="Views\Department\DepartmentView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\ExamGradesView.xaml">
+    <Page Update="Views\Exam\ExamGradesView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\StudentView.xaml">
+    <Page Update="Views\Student\StudentView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\UpdateDepartementView.xaml">
+    <Page Update="Views\Department\UpdateDepartementView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\UpdateExamGrade.xaml">
+    <Page Update="Views\Exam\UpdateExamGrade.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\UpdateStudentView.xaml">
+    <Page Update="Views\Student\UpdateStudentView.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
