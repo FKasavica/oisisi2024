@@ -104,37 +104,9 @@ namespace SSluzba.Models
             }
         }
 
-        private List<Student> _passedStudents = new List<Student>();
-        public List<Student> PassedStudents
-        {
-            get => _passedStudents;
-            set
-            {
-                if (value != _passedStudents)
-                {
-                    _passedStudents = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        private List<Student> _failedStudents = new List<Student>();
-        public List<Student> FailedStudents
-        {
-            get => _failedStudents;
-            set
-            {
-                if (value != _failedStudents)
-                {
-                    _failedStudents = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
         public Subject() { }
 
-        public Subject(int id, string code, string name, Semester semester, int studyYear, int professorId, int espbPoints, List<Student> passedStudents, List<Student> failedStudents)
+        public Subject(int id, string code, string name, Semester semester, int studyYear, int professorId, int espbPoints)
         {
             Id = id;
             Code = code;
@@ -143,8 +115,6 @@ namespace SSluzba.Models
             StudyYear = studyYear;
             ProfessorId = professorId;
             EspbPoints = espbPoints;
-            PassedStudents = passedStudents;
-            FailedStudents = failedStudents;
         }
 
         public string[] ToCSV()
@@ -157,9 +127,7 @@ namespace SSluzba.Models
                 Semester.ToString(),
                 StudyYear.ToString(),
                 ProfessorId.ToString(),
-                EspbPoints.ToString(),
-                string.Join(", ", PassedStudents),
-                string.Join(", ", FailedStudents)
+                EspbPoints.ToString()
             };
             return csvValues;
         }
@@ -173,15 +141,12 @@ namespace SSluzba.Models
             StudyYear = int.Parse(values[4]);
             ProfessorId = int.Parse(values[5]);
             EspbPoints = int.Parse(values[6]);
-            PassedStudents = new List<Student>();
-            FailedStudents = new List<Student>();
         }
 
         public override string ToString()
         {
             return $"ID: {Id}, Code: {Code}, Name: {Name}, Semester: {Semester}, Study Year: {StudyYear}, " +
-                   $"Professor ID: {ProfessorId}, ESPB Points: {EspbPoints}, " +
-                   $"Passed Students: {PassedStudents.Count}, Failed Students: {FailedStudents.Count}";
+                   $"Professor ID: {ProfessorId}, ESPB Points: {EspbPoints}";
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

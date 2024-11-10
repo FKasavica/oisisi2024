@@ -136,10 +136,6 @@ namespace SSluzba.Models
             }
         }
 
-        //PassedSubjects, class needed
-
-        //FailedSubjects, class needed
-
         public Student() { }
 
         public Student(int id, string surname, string name, DateTime dateOfBirth, string phoneNumber, string email, int currentYear, Status status, double averageGrade)

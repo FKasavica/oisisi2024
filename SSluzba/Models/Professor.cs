@@ -128,11 +128,26 @@ namespace SSluzba.Models
             }
         }
 
-        //Subjects, class needed
+        private List<Subject> _subjects = new List<Subject>();
+        public List<Subject> Subjects
+        {
+            get => _subjects;
+            set
+            {
+                if (value != _subjects)
+                {
+                    _subjects = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
-        public Professor() { }
+        public Professor() 
+        {
+            _subjects = new List<Subject>();
+        }
 
-        public Professor(int id, string surname, string name, DateTime dateOfBirth, string phoneNumber, string email, string personalIdNumber, string title, int yearsOfExperience)
+        public Professor(int id, string surname, string name, DateTime dateOfBirth, string phoneNumber, string email, string personalIdNumber, string title, int yearsOfExperience, List<Subject> subjects)
         {
             Id = id;
             Surname = surname;
@@ -143,6 +158,7 @@ namespace SSluzba.Models
             PersonalIdNumber = personalIdNumber;
             Title = title;
             YearsOfExperience = yearsOfExperience;
+            Subjects = subjects;
         }
 
         public string[] ToCSV()
@@ -157,7 +173,8 @@ namespace SSluzba.Models
                 Email,
                 PersonalIdNumber,
                 Title,
-                YearsOfExperience.ToString()
+                YearsOfExperience.ToString(),
+                string.Join(", ", Subjects.Select(s => s.Id))
             };
             return csvValues;
         }
@@ -173,13 +190,17 @@ namespace SSluzba.Models
             PersonalIdNumber = values[6];
             Title = values[7];
             YearsOfExperience = int.Parse(values[8]);
+
+            //var subjectIds = values[9].Split(',').Select(int.Parse).ToList();
+            //Subjects = FetchSubjectsByIds(subjectIds);    Enable when service for this is implemented
         }
 
         public override string ToString()
         {
             return $"ID: {Id}, Name: {Name} {Surname}, Date of Birth: {DateOfBirth:yyyy-MM-dd}, " +
                    $"Phone: {PhoneNumber}, Email: {Email}, Personal ID: {PersonalIdNumber}, " +
-                   $"Title: {Title}, Experience: {YearsOfExperience} years";
+                   $"Title: {Title}, Experience: {YearsOfExperience} years, " +
+                   $"Subjects: {string.Join(", ", Subjects.Select(s => s.Name))}";
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
