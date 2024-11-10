@@ -1,3 +1,7 @@
 /.vs
 /SSluzba/bin
 /SSluzba/obj
+.vs/*.db-shm
+.vs/*.db-wal
+.vs/*.db
+
