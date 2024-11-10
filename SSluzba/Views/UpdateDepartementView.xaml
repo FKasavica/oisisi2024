@@ -1,0 +1,25 @@
+﻿<Window x:Class="SSluzba.Views.UpdateDepartmentView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Update Department" Height="400" Width="400">
+    <Grid Margin="10">
+        <StackPanel>
+            <Label Content="Department Code:" />
+            <TextBox x:Name="DepartmentCodeInput" Width="200" IsReadOnly="True" />
+
+            <Label Content="Department Name:" />
+            <TextBox x:Name="DepartmentNameInput" Width="200" />
+
+            <Label Content="Head of Department ID:" />
+            <TextBox x:Name="HeadOfDepartmentIdInput" Width="200" IsReadOnly="True" />
+
+            <Label Content="Professor IDs (comma-separated):" />
+            <TextBox x:Name="ProfessorIdListInput" Width="200" IsReadOnly="True" />
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+                <Button Content="OK" Width="80" Margin="5" Click="OkButton_Click" />
+                <Button Content="Cancel" Width="80" Margin="5" Click="CancelButton_Click" />
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>

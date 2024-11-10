@@ -1,12 +1,19 @@
 ﻿<Window x:Class="SSluzba.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:SSluzba"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Title="SSluzba Admin Panel - Main Window" Height="400" Width="600" Background="#f0f0f0">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
+        <TextBlock Text="Welcome to SSluzba Admin Panel" FontSize="26" FontWeight="Bold" Foreground="#2c3e50" HorizontalAlignment="Center" Margin="10"/>
+
+        <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,20,0,0">
+            <TextBlock Text="Please select an action:" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,20"/>
+            <Button Content="Manage Students"  Width="200" Height="40" Click="ManageStudentsButton_Click"/>
+            <Button Content="Manage Professors"  Width="200" Height="40" Click="ManageProfessorsButton_Click"/>
+            <Button Content="Manage Subjects"  Width="200" Height="40" Click="ManageSubjectsButton_Click"/>
+        </StackPanel>
     </Grid>
 </Window>

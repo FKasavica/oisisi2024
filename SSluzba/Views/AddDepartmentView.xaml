@@ -1,0 +1,29 @@
+﻿<Window x:Class="SSluzba.Views.AddDepartmentView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SSluzba.Views"
+        mc:Ignorable="d"
+        Title="Add Department" Height="450" Width="800">
+    <Grid Margin="10">
+        <StackPanel>
+            <Label Content="Department Code:" />
+            <TextBox x:Name="DepartmentCodeInput" Width="200" />
+
+            <Label Content="Department Name:" />
+            <TextBox x:Name="DepartmentNameInput" Width="200" />
+
+            <Label Content="Head of Department ID:" />
+            <TextBox x:Name="HeadOfDepartmentIdInput" Width="200" IsReadOnly="True" />
+
+            <Label Content="Professor IDs (comma-separated):" />
+            <TextBox x:Name="ProfessorIdListInput" Width="200" IsReadOnly="True" />
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+                <Button Content="OK" Width="80" Margin="5" Click="OkButton_Click" />
+                <Button Content="Cancel" Width="80" Margin="5" Click="CancelButton_Click" />
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>

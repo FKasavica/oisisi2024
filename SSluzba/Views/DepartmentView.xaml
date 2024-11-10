@@ -1,0 +1,30 @@
+﻿<Window x:Class="SSluzba.Views.DepartmentView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Manage Departments" Height="450" Width="600">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Department Management" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="10"/>
+
+        <DataGrid x:Name="DepartmentDataGrid" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single" Margin="0,10,0,10">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="*"/>
+                <DataGridTextColumn Header="Code" Binding="{Binding DepartmentCode}" Width="*"/>
+                <DataGridTextColumn Header="Name" Binding="{Binding DepartmentName}" Width="*"/>
+                <DataGridTextColumn Header="Head ID" Binding="{Binding HeadOfDepartmentId}" Width="*"/>
+                <DataGridTextColumn Header="Professors" Binding="{Binding ProfessorIdList}" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+            <Button Content="Add Department" Width="120" Margin="5" Click="AddDepartmentButton_Click"/>
+            <Button Content="Update Department" Width="120" Margin="5" Click="UpdateDepartmentButton_Click"/>
+            <Button Content="Delete Department" Width="120" Margin="5" Click="DeleteDepartmentButton_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

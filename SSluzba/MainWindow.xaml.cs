@@ -1,23 +1,33 @@
-﻿using System.Text;
+﻿using SSluzba.Views;
+using System;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
-namespace SSluzba;
-
-/// <summary>
-/// Interaction logic for MainWindow.xaml
-/// </summary>
-public partial class MainWindow : Window
+namespace SSluzba
 {
-    public MainWindow()
+    public partial class MainWindow : Window
     {
-        InitializeComponent();
+        public MainWindow()
+        {
+            InitializeComponent();
+        }
+
+        private void ManageStudentsButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Otvaranje prozora za upravljanje studentima
+            StudentView studentView = new StudentView();
+            studentView.Show();
+        }
+
+        private void ManageProfessorsButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Ovde kasnije možeš implementirati prozor za upravljanje profesorima
+            MessageBox.Show("Manage Professors feature is not yet implemented.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        private void ManageSubjectsButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Ovde kasnije možeš implementirati prozor za upravljanje predmetima
+            MessageBox.Show("Manage Subjects feature is not yet implemented.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
     }
 }

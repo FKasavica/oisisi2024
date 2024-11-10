@@ -1,0 +1,43 @@
+﻿<Window x:Class="SSluzba.Views.UpdateStudentView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Update Student" Height="503" Width="400">
+    <Grid Margin="10">
+        <StackPanel>
+            <Label Content="Surname:" />
+            <TextBox x:Name="SurnameInput" Width="200" />
+
+            <Label Content="Name:" />
+            <TextBox x:Name="NameInput" Width="200" />
+
+            <Label Content="Date of Birth:" />
+            <DatePicker x:Name="DateOfBirthInput" Width="200" />
+
+            <Label Content="Phone Number:" />
+            <TextBox x:Name="PhoneNumberInput" Width="200" />
+
+            <Label Content="Email:" />
+            <TextBox x:Name="EmailInput" Width="200" />
+
+            <Label Content="Index ID:" />
+            <TextBox x:Name="IndexIdInput" Width="200" IsReadOnly="True" />
+
+            <Label Content="Current Year:" />
+            <TextBox x:Name="CurrentYearInput" Width="200" />
+
+            <Label Content="Status (Budget/SelfFinanced):" />
+            <ComboBox x:Name="StatusInput" Width="200">
+                <ComboBoxItem Content="Budget" />
+                <ComboBoxItem Content="SelfFinanced" />
+            </ComboBox>
+
+            <Label Content="Average Grade:" />
+            <TextBox x:Name="AverageGradeInput" Width="200" />
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+                <Button Content="OK" Width="80" Margin="5" Click="OkButton_Click" />
+                <Button Content="Cancel" Width="80" Margin="5" Click="CancelButton_Click" />
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>
