@@ -10,6 +10,7 @@
                 <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="150"/>
                 <DataGridTextColumn Header="Year" Binding="{Binding CurrentYear}" Width="100"/>
                 <DataGridTextColumn Header="Average Grade" Binding="{Binding AverageGrade}" Width="100"/>
+                <DataGridTextColumn Header="Index" Binding="{Binding Index}" Width="150"/>
             </DataGrid.Columns>
         </DataGrid>
 
@@ -17,5 +18,6 @@
         <Button Content="Update Student" HorizontalAlignment="Left" Margin="180,220,0,0" VerticalAlignment="Top" Width="150" Click="UpdateStudentButton_Click"/>
         <Button Content="Delete Student" HorizontalAlignment="Left" Margin="350,220,0,0" VerticalAlignment="Top" Width="150" Click="DeleteStudentButton_Click"/>
         <Button Content="Manage Exam Grades" HorizontalAlignment="Left" Margin="520,220,0,0" VerticalAlignment="Top" Width="150" Click="ManageExamGradesButton_Click"/>
+        <Button Content="Change Index" HorizontalAlignment="Left" Margin="275,272,0,0" VerticalAlignment="Top" Width="150" Click="ChangeIndexButton_Click"/>
     </Grid>
 </Window>

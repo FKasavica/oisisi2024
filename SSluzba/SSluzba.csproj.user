@@ -8,6 +8,9 @@
     <Compile Update="Views\Exam\AddExamGradeView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\Index\ChangeIndexView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\Student\AddStudentView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -35,6 +38,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\Exam\AddExamGradeView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Index\ChangeIndexView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\Student\AddStudentView.xaml">

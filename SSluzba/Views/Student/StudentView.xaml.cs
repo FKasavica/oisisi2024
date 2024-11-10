@@ -1,6 +1,7 @@
 ﻿using SSluzba.Controllers;
 using SSluzba.Models;
 using SSluzba.Observer;
+using SSluzba.Views.Index;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -11,6 +12,7 @@ namespace SSluzba.Views
     {
         private StudentController _controller;
         private ExamGradeController _examGradeController;
+        private IndexController _indexController;
 
         public StudentView() : base()
         {
@@ -18,6 +20,7 @@ namespace SSluzba.Views
             _controller = new StudentController();
             _controller.Subscribe(this);
             _examGradeController = new ExamGradeController();
+            _indexController = new IndexController();
             RefreshStudentList();
         }
 
@@ -83,6 +86,24 @@ namespace SSluzba.Views
             else
             {
                 MessageBox.Show("Please select a student to manage exam grades.", "Manage Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void ChangeIndexButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (StudentDataGrid.SelectedItem is Student selectedStudent)
+            {
+                ChangeIndexView changeIndexWindow = new ChangeIndexView(selectedStudent, _indexController.GetAllIndices());
+                if (changeIndexWindow.ShowDialog() == true)
+                {
+                    // Ažuriraj indeks studenta
+                    selectedStudent.IndexId = changeIndexWindow.SelectedIndex.Id;
+                    _controller.UpdateStudent(selectedStudent);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select a student to change the index.", "Change Index Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }
