@@ -24,9 +24,18 @@ namespace SSluzba.Controllers
             return _examGradeDAO.GetAll();
         }
 
+        public double GetAverageGrade(int studentId)
+        {
+            var grades = _examGradeDAO.GetGradesByStudentId(studentId);
+            if (grades.Count == 0) return 0;
+
+            return grades.Average(g => g.NumericGrade);
+        }
+
+
         public List<ExamGrade> GetExamGradesForStudent(int studentId)
         {
-            return _examGradeDAO.GetAll().FindAll(g => g.StudentId == studentId);
+            return _examGradeDAO.GetGradesByStudentId(studentId);
         }
 
         public void AddExamGrade(ExamGrade examGrade)

@@ -52,6 +52,12 @@ namespace SSluzba.DAO
             return _examGrades;
         }
 
+        public List<ExamGrade> GetGradesByStudentId(int studentId)
+        {
+            return _examGrades.Where(g => g.StudentId == studentId).ToList();
+        }
+
+
         private List<ExamGrade> LoadExamGrades()
         {
             List<ExamGrade> examGrades = new List<ExamGrade>();
