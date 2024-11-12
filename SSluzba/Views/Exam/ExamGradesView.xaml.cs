@@ -1,55 +1,46 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows;
-using SSluzba.Controllers;
+﻿using SSluzba.Controllers;
 using SSluzba.Models;
 using SSluzba.Observer;
+using System;
+using System.Collections.Generic;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace SSluzba.Views
 {
     public partial class ExamGradesView : Window, IObserver
     {
-        private ExamGradeController _controller;
-        private int _studentId;
+        private ExamGradeController _examGradeController;
 
-        public ExamGradesView(int studentId)
+        public ExamGradesView(List<ExamGrade> examGrades) : base()
         {
             InitializeComponent();
-            _controller = new ExamGradeController();
-            _studentId = studentId;
-            _controller.Subscribe(this);
-            RefreshExamGradesList();
+            _examGradeController = new ExamGradeController();
+            _examGradeController.Subscribe(this);
+            RefreshExamGradesList(examGrades);
         }
 
         public void Update()
         {
-            RefreshExamGradesList();
+            RefreshExamGradesList(_examGradeController.GetAllExamGrades());
         }
 
-        private void RefreshExamGradesList()
+        private void RefreshExamGradesList(List<ExamGrade> examGrades)
         {
             ExamGradesDataGrid.ItemsSource = null;
-            ExamGradesDataGrid.ItemsSource = _controller.GetExamGradesForStudent(_studentId);
+            ExamGradesDataGrid.ItemsSource = examGrades;
         }
 
         private void AddExamGradeButton_Click(object sender, RoutedEventArgs e)
         {
-            AddExamGradeView addExamGradeWindow = new AddExamGradeView();
-            if (addExamGradeWindow.ShowDialog() == true)
-            {
-                _controller.AddExamGrade(addExamGradeWindow.ExamGrade);
-            }
+            _examGradeController.OpenAddExamGradeView();
         }
 
         private void UpdateExamGradeButton_Click(object sender, RoutedEventArgs e)
         {
             if (ExamGradesDataGrid.SelectedItem is ExamGrade selectedExamGrade)
             {
-                UpdateExamGradeView updateExamGradeWindow = new UpdateExamGradeView(selectedExamGrade);
-                if (updateExamGradeWindow.ShowDialog() == true)
-                {
-                    _controller.UpdateExamGrade(updateExamGradeWindow.ExamGrade);
-                }
+                _examGradeController.OpenUpdateExamGradeView(selectedExamGrade);
             }
             else
             {
@@ -61,7 +52,7 @@ namespace SSluzba.Views
         {
             if (ExamGradesDataGrid.SelectedItem is ExamGrade selectedExamGrade)
             {
-                _controller.DeleteExamGrade(selectedExamGrade.Id);
+                _examGradeController.DeleteExamGrade(selectedExamGrade.Id);
             }
             else
             {

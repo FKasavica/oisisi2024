@@ -1,9 +1,11 @@
-﻿<Window x:Class="SSluzba.Views.StudentView"
+﻿<Window x:Class="SSluzba.Views.Student.StudentView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Student View" Height="450" Width="800">
     <Grid>
-        <DataGrid x:Name="StudentDataGrid" AutoGenerateColumns="False" HorizontalAlignment="Left" Height="200" Margin="10,10,0,0" VerticalAlignment="Top" Width="760">
+        <!-- DataGrid za prikaz studenata -->
+        <DataGrid x:Name="StudentDataGrid" AutoGenerateColumns="False" HorizontalAlignment="Left" 
+                  Height="200" Margin="10,10,0,0" VerticalAlignment="Top" Width="760">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="50"/>
                 <DataGridTextColumn Header="Surname" Binding="{Binding Surname}" Width="150"/>
@@ -11,13 +13,19 @@
                 <DataGridTextColumn Header="Year" Binding="{Binding CurrentYear}" Width="100"/>
                 <DataGridTextColumn Header="Average Grade" Binding="{Binding AverageGrade}" Width="100"/>
                 <DataGridTextColumn Header="Index" Binding="{Binding Index}" Width="150"/>
+                <!-- Prikaz adrese koristeći Address.ToString() -->
+                <DataGridTextColumn Header="Address" Binding="{Binding Address}" Width="200"/>
             </DataGrid.Columns>
         </DataGrid>
 
-        <Button Content="Add New Student" HorizontalAlignment="Left" Margin="10,220,0,0" VerticalAlignment="Top" Width="150" Click="AddStudentButton_Click"/>
-        <Button Content="Update Student" HorizontalAlignment="Left" Margin="180,220,0,0" VerticalAlignment="Top" Width="150" Click="UpdateStudentButton_Click"/>
-        <Button Content="Delete Student" HorizontalAlignment="Left" Margin="350,220,0,0" VerticalAlignment="Top" Width="150" Click="DeleteStudentButton_Click"/>
-        <Button Content="Manage Exam Grades" HorizontalAlignment="Left" Margin="520,220,0,0" VerticalAlignment="Top" Width="150" Click="ManageExamGradesButton_Click"/>
-        <Button Content="Change Index" HorizontalAlignment="Left" Margin="275,272,0,0" VerticalAlignment="Top" Width="150" Click="ChangeIndexButton_Click"/>
+        <!-- Dugmad za različite akcije sa studentima -->
+        <Button Content="Add New Student" HorizontalAlignment="Left" Margin="10,220,0,0" 
+                VerticalAlignment="Top" Width="150" Click="AddStudentButton_Click"/>
+        <Button Content="Update Student" HorizontalAlignment="Left" Margin="180,220,0,0" 
+                VerticalAlignment="Top" Width="150" Click="UpdateStudentButton_Click"/>
+        <Button Content="Delete Student" HorizontalAlignment="Left" Margin="350,220,0,0" 
+                VerticalAlignment="Top" Width="150" Click="DeleteStudentButton_Click"/>
+        <Button Content="Manage Exam Grades" HorizontalAlignment="Left" Margin="520,220,0,0" 
+                VerticalAlignment="Top" Width="150" Click="ManageExamGradesButton_Click"/>
     </Grid>
 </Window>

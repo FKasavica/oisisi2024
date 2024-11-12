@@ -1,10 +1,3 @@
-1,Smith,John,1995-04-15,+1234567890,john.smith@example.com,1,3,Budget,8.5
-2,Doe,Jane,1997-09-22,+1234567891,jane.doe@example.com,2,2,SelfFinanced,7.3
-3,Miller,Michael,1996-11-30,+1234567892,michael.miller@example.com,3,1,Budget,9.1
-4,Johnson,Emily,1998-05-19,+1234567893,emily.johnson@example.com,4,4,SelfFinanced,8.0
-5,Garcia,Anna,1997-07-14,+1234567894,anna.garcia@example.com,5,3,Budget,9.0
-6,Wilson,Robert,1996-02-08,+1234567895,robert.wilson@example.com,6,2,Budget,7.8
-7,Lee,Sophia,1999-01-12,+1234567896,sophia.lee@example.com,7,1,SelfFinanced,6.9
-8,Walker,Oliver,1998-08-23,+1234567897,oliver.walker@example.com,8,4,Budget,8.4
-9,Hall,Jessica,1997-12-03,+1234567898,jessica.hall@example.com,9,3,SelfFinanced,7.5
-10,Young,David,1995-10-25,+1234567899,david.young@example.com,10,2,Budget,9.2
+1,Smith,John,1995-06-15,1,123-456-7890,john.smith@example.com,101,2,B
+2,Doe,Jane,1996-03-22,2,987-654-3210,jane.doe@example.com,102,3,S
+3,Johnson,Emily,1997-08-30,3,111-222-3333,emily.johnson@example.com,103,1,B

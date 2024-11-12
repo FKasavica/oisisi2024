@@ -10,9 +10,9 @@ namespace SSluzba.Views.Index
     {
         private List<Models.Index> _allIndices;
         public Models.Index SelectedIndex { get; private set; }
-        private Student _student;
+        private Models.Student _student;
 
-        public ChangeIndexView(Student student, List<Models.Index> allIndices)
+        public ChangeIndexView(Models.Student student, List<Models.Index> allIndices)
         {
             InitializeComponent();
             _student = student;

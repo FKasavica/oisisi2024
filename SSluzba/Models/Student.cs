@@ -1,12 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Runtime.Serialization;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 public enum Status
 {
@@ -16,7 +11,7 @@ public enum Status
 
 namespace SSluzba.Models
 {
-    public class Student: INotifyPropertyChanged
+    public class Student : INotifyPropertyChanged
     {
         public int Id { get; set; }
 
@@ -62,7 +57,19 @@ namespace SSluzba.Models
             }
         }
 
-        //Address, class needed
+        private int _addressId;
+        public int AddressId
+        {
+            get => _addressId;
+            set
+            {
+                if (value != _addressId)
+                {
+                    _addressId = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         private string _phoneNumber;
         public string PhoneNumber
@@ -134,50 +141,37 @@ namespace SSluzba.Models
             }
         }
 
-        private double _averageGrade;
-        public double AverageGrade
-        {
-            get => _averageGrade;
-            set
-            {
-                if (value != _averageGrade)
-                {
-                    _averageGrade = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
 
         public Student() { }
 
-        public Student(int id, string surname, string name, DateTime dateOfBirth, string phoneNumber, string email, int indexId, int currentYear, Status status, double averageGrade)
+        public Student(int id, string surname, string name, DateTime dateOfBirth, int addressId, string phoneNumber, string email, int indexId, int currentYear, Status status)
         {
             Id = id;
             Surname = surname;
             Name = name;
             DateOfBirth = dateOfBirth;
+            AddressId = addressId;
             PhoneNumber = phoneNumber;
             Email = email;
             IndexId = indexId;
             CurrentYear = currentYear;
             Status = status;
-            AverageGrade = averageGrade;
         }
 
         public string[] ToCSV()
         {
             string[] csvValues =
             {
-            Id.ToString(),
-            Surname,
-            Name,
-            DateOfBirth.ToString("yyyy-MM-dd"),
-            PhoneNumber,
-            Email,
-            IndexId.ToString(),
-            CurrentYear.ToString(),
-            Status.ToString(),
-            AverageGrade.ToString()
+                Id.ToString(),
+                Surname,
+                Name,
+                DateOfBirth.ToString("yyyy-MM-dd"),
+                AddressId.ToString(),
+                PhoneNumber,
+                Email,
+                IndexId.ToString(),
+                CurrentYear.ToString(),
+                Status.ToString()
             };
             return csvValues;
         }
@@ -188,20 +182,21 @@ namespace SSluzba.Models
             Surname = values[1];
             Name = values[2];
             DateOfBirth = DateTime.ParseExact(values[3], "yyyy-MM-dd", null);
-            PhoneNumber = values[4];
-            Email = values[5];
-            IndexId = int.Parse(values[6]);
-            CurrentYear = int.Parse(values[7]);
-            Status = (Status)Enum.Parse(typeof(Status), values[8]);
-            AverageGrade = double.Parse(values[9]);
+            AddressId = int.Parse(values[4]);
+            PhoneNumber = values[5];
+            Email = values[6];
+            IndexId = int.Parse(values[7]);
+            CurrentYear = int.Parse(values[8]);
+            Status = values[9] == "B" ? Status.Budget : Status.SelfFinanced;
+
         }
 
-        public override string ToString()
-        {
-            return $"ID: {Id}, Name: {Name} {Surname}, Date of Birth: {DateOfBirth:yyyy-MM-dd}, " +
-                   $"Phone: {PhoneNumber}, Email: {Email}, IndexId: {IndexId}, Current Year: {CurrentYear}, " +
-                   $"Status: {Status}, Average Grade: {AverageGrade:F2}";
-        }
+        //public override string ToString()
+        //{
+        //    return $"ID: {Id}, Name: {Name} {Surname}, Date of Birth: {DateOfBirth:yyyy-MM-dd}, AddressId: {AddressId}, " +
+        //           $"Phone: {PhoneNumber}, Email: {Email}, IndexId: {IndexId}, Current Year: {CurrentYear}, " +
+        //           $"Status: {Status}, Average Grade: {AverageGrade:F2}";
+        //}
 
         public event PropertyChangedEventHandler PropertyChanged;
 

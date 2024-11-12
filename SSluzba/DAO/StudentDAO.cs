@@ -47,12 +47,17 @@ namespace SSluzba.DAO
                 existingStudent.Surname = updatedStudent.Surname;
                 existingStudent.Name = updatedStudent.Name;
                 existingStudent.DateOfBirth = updatedStudent.DateOfBirth;
+
+                // Ažuriranje AddressId umesto kompletnog Address objekta
+                existingStudent.AddressId = updatedStudent.AddressId;
+
                 existingStudent.PhoneNumber = updatedStudent.PhoneNumber;
                 existingStudent.Email = updatedStudent.Email;
                 existingStudent.IndexId = updatedStudent.IndexId;
                 existingStudent.CurrentYear = updatedStudent.CurrentYear;
                 existingStudent.Status = updatedStudent.Status;
-                existingStudent.AverageGrade = updatedStudent.AverageGrade;
+
+                // Uklonjen AverageGrade iz procesa ažuriranja jer se sada računa automatski
                 _repository.SaveStudents(_students);
                 NotifyObservers();
             }

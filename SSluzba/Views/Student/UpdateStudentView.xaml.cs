@@ -1,4 +1,5 @@
-﻿using SSluzba.Models;
+﻿using SSluzba.Controllers;
+using SSluzba.Models;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -7,9 +8,10 @@ namespace SSluzba.Views
 {
     public partial class UpdateStudentView : Window
     {
-        public Student Student { get; private set; }
-
-        public UpdateStudentView(Student student)
+        public Models.Student Student { get; private set; }
+        private StudentController _controller;
+        private ExamGradeController _examGradeController;
+        public UpdateStudentView(Models.Student student)
         {
             InitializeComponent();
 
@@ -24,7 +26,6 @@ namespace SSluzba.Views
                 IndexIdInput.Text = student.IndexId.ToString();
                 CurrentYearInput.Text = student.CurrentYear.ToString();
                 StatusInput.SelectedItem = student.Status == Status.Budget ? StatusInput.Items[0] : StatusInput.Items[1];
-                AverageGradeInput.Text = student.AverageGrade.ToString();
             }
         }
 
@@ -38,15 +39,14 @@ namespace SSluzba.Views
                 string.IsNullOrWhiteSpace(EmailInput.Text) ||
                 !int.TryParse(IndexIdInput.Text, out int indexId) ||
                 !int.TryParse(CurrentYearInput.Text, out int currentYear) ||
-                StatusInput.SelectedItem == null ||
-                !double.TryParse(AverageGradeInput.Text, out double averageGrade))
+                StatusInput.SelectedItem == null )
             {
                 MessageBox.Show("Please fill in all fields correctly.", "Input Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
             // Ažuriranje podataka o studentu
-            Student = new Student
+            Student = new Models.Student
             {
                 Id = indexId,
                 Surname = SurnameInput.Text,
@@ -57,7 +57,6 @@ namespace SSluzba.Views
                 IndexId = indexId,
                 CurrentYear = currentYear,
                 Status = (Status)Enum.Parse(typeof(Status), ((ComboBoxItem)StatusInput.SelectedItem).Content.ToString()),
-                AverageGrade = averageGrade
             };
 
             DialogResult = true;

@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using SSluzba.DAO;
-using SSluzba.DAO;
+﻿using SSluzba.DAO;
 using SSluzba.Models;
 using SSluzba.Observer;
+using SSluzba.Views;
 
 namespace SSluzba.Controllers
 {
@@ -22,22 +19,22 @@ namespace SSluzba.Controllers
             _studentDAO.Subscribe(observer);
         }
 
-        public void AddStudent(string surname, string name, DateTime dateOfBirth, string phoneNumber, string email, int indexId, int currentYear, Status status, double averageGrade)
+        // Ova metoda pokreće AddStudentView i delegira dodavanje novog studenta
+        public void OpenAddStudentView()
         {
-            var newStudent = new Student
-            {
-                Surname = surname,
-                Name = name,
-                DateOfBirth = dateOfBirth,
-                PhoneNumber = phoneNumber,
-                Email = email,
-                IndexId = indexId,
-                CurrentYear = currentYear,
-                Status = status,
-                AverageGrade = averageGrade
-            };
+            var addStudentWindow = new AddStudentView();
+        }
 
-            _studentDAO.Add(newStudent);
+        public void AddStudent(Student student)
+        {
+            _studentDAO.Add(student);
+        }
+
+        // Ova metoda pokreće UpdateStudentView i delegira ažuriranje studenta
+        public void OpenUpdateStudentView(SSluzba.Models.Student student)
+        {
+            var updateStudentWindow = new UpdateStudentView(student);
+            updateStudentWindow.ShowDialog();
         }
 
         public void UpdateStudent(Student updatedStudent)

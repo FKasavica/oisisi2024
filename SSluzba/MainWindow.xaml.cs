@@ -1,4 +1,5 @@
 ﻿using SSluzba.Views;
+using SSluzba.Views.Student;
 using System;
 using System.Windows;
 

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using SSluzba.DAO;
 using SSluzba.Models;
 using SSluzba.Observer;
@@ -49,5 +50,15 @@ namespace SSluzba.Controllers
         {
             return _indexDAO.GetAll();
         }
+        public int GetIndexId(string majorCode, int enrollmentNumber, int enrollmentYear)
+        {
+            return _indexDAO.GetIndexId(majorCode, enrollmentNumber, enrollmentYear);
+        }
+
+        public Models.Index GetIndexById(int id)
+        {
+            return _indexDAO.GetAll().FirstOrDefault(index => index.Id == id);
+        }
+
     }
 }

@@ -6,57 +6,76 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace SSluzba.Views
+namespace SSluzba.Views.Student
 {
     public partial class StudentView : Window, IObserver
     {
         private StudentController _controller;
         private ExamGradeController _examGradeController;
         private IndexController _indexController;
+        private AddressController _addressController;
 
         public StudentView() : base()
         {
             InitializeComponent();
+
             _controller = new StudentController();
-            _controller.Subscribe(this);
             _examGradeController = new ExamGradeController();
             _indexController = new IndexController();
+            _addressController = new AddressController();
+
+            _controller.Subscribe(this);
+            _indexController.Subscribe(this);
+            _examGradeController.Subscribe(this);
+            _addressController.Subscribe(this);
+
             RefreshStudentList();
         }
+
 
         public void Update()
         {
             RefreshStudentList();
         }
 
-        private void RefreshStudentList()
+private void RefreshStudentList()
         {
+            var students = _controller.GetAllStudents();
+            var studentDetails = new List<dynamic>();
+
+            foreach (var student in students)
+            {
+                var address = _addressController.GetAddressById(student.AddressId)?.ToString() ?? "N/A";
+                var index = _indexController.GetIndexById(student.IndexId)?.ToString() ?? "N/A";
+                var averageGrade = _examGradeController.GetAverageGrade(student.Id);
+
+                studentDetails.Add(new
+                {
+                    student.Id,
+                    student.Surname,
+                    student.Name,
+                    student.CurrentYear,
+                    AverageGrade = averageGrade,
+                    Index = index,
+                    Address = address
+                });
+            }
+
             StudentDataGrid.ItemsSource = null;
-            StudentDataGrid.ItemsSource = _controller.GetAllStudents();
+            StudentDataGrid.ItemsSource = studentDetails;
         }
 
         private void AddStudentButton_Click(object sender, RoutedEventArgs e)
         {
-            // Otvaranje novog prozora za dodavanje studenta
-            AddStudentView addStudentWindow = new AddStudentView();
-            if (addStudentWindow.ShowDialog() == true)
-            {
-                // Ako je unos uspešan, dodaj studenta
-                _controller.AddStudent(addStudentWindow.Student.Surname, addStudentWindow.Student.Name, addStudentWindow.Student.DateOfBirth, addStudentWindow.Student.PhoneNumber, addStudentWindow.Student.Email, addStudentWindow.Student.IndexId, addStudentWindow.Student.CurrentYear, addStudentWindow.Student.Status, addStudentWindow.Student.AverageGrade);
-            }
+            var addStudentWindow = new AddStudentView();
+            addStudentWindow.ShowDialog();
         }
 
         private void UpdateStudentButton_Click(object sender, RoutedEventArgs e)
         {
-            if (StudentDataGrid.SelectedItem is Student selectedStudent)
+            if (StudentDataGrid.SelectedItem is Models.Student selectedStudent)
             {
-                // Otvaranje prozora za ažuriranje studenta
-                UpdateStudentView updateStudentWindow = new UpdateStudentView(selectedStudent);
-                if (updateStudentWindow.ShowDialog() == true)
-                {
-                    // Ažuriraj studenta
-                    _controller.UpdateStudent(updateStudentWindow.Student);
-                }
+                _controller.OpenUpdateStudentView(selectedStudent);
             }
             else
             {
@@ -66,7 +85,7 @@ namespace SSluzba.Views
 
         private void DeleteStudentButton_Click(object sender, RoutedEventArgs e)
         {
-            if (StudentDataGrid.SelectedItem is Student selectedStudent)
+            if (StudentDataGrid.SelectedItem is Models.Student selectedStudent)
             {
                 _controller.DeleteStudent(selectedStudent.Id);
             }
@@ -78,32 +97,14 @@ namespace SSluzba.Views
 
         private void ManageExamGradesButton_Click(object sender, RoutedEventArgs e)
         {
-            if (StudentDataGrid.SelectedItem is Student selectedStudent)
+            if (StudentDataGrid.SelectedItem is Models.Student selectedStudent)
             {
-                ExamGradesView examGradesView = new ExamGradesView(selectedStudent.Id);
+                ExamGradesView examGradesView = new ExamGradesView(_examGradeController.GetExamGradesForStudent(selectedStudent.Id));
                 examGradesView.ShowDialog();
             }
             else
             {
                 MessageBox.Show("Please select a student to manage exam grades.", "Manage Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-
-        private void ChangeIndexButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (StudentDataGrid.SelectedItem is Student selectedStudent)
-            {
-                ChangeIndexView changeIndexWindow = new ChangeIndexView(selectedStudent, _indexController.GetAllIndices());
-                if (changeIndexWindow.ShowDialog() == true)
-                {
-                    // Ažuriraj indeks studenta
-                    selectedStudent.IndexId = changeIndexWindow.SelectedIndex.Id;
-                    _controller.UpdateStudent(selectedStudent);
-                }
-            }
-            else
-            {
-                MessageBox.Show("Please select a student to change the index.", "Change Index Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

@@ -1,6 +1,7 @@
 ﻿using SSluzba.DAO;
 using SSluzba.Models;
 using SSluzba.Observer;
+using SSluzba.Views;
 using System.Collections.Generic;
 
 namespace SSluzba.Controllers
@@ -32,7 +33,6 @@ namespace SSluzba.Controllers
             return grades.Average(g => g.NumericGrade);
         }
 
-
         public List<ExamGrade> GetExamGradesForStudent(int studentId)
         {
             return _examGradeDAO.GetGradesByStudentId(studentId);
@@ -51,6 +51,26 @@ namespace SSluzba.Controllers
         public void DeleteExamGrade(int id)
         {
             _examGradeDAO.Delete(id);
+        }
+
+        // Dodavanje metode za otvaranje pogleda za dodavanje ocene
+        public void OpenAddExamGradeView()
+        {
+            var addExamGradeWindow = new AddExamGradeView();
+            if (addExamGradeWindow.ShowDialog() == true)
+            {
+                AddExamGrade(addExamGradeWindow.ExamGrade);
+            }
+        }
+
+        // Dodavanje metode za otvaranje pogleda za ažuriranje ocene
+        public void OpenUpdateExamGradeView(ExamGrade examGrade)
+        {
+            var updateExamGradeWindow = new UpdateExamGradeView(examGrade);
+            if (updateExamGradeWindow.ShowDialog() == true)
+            {
+                UpdateExamGrade(updateExamGradeWindow.ExamGrade);
+            }
         }
     }
 }
