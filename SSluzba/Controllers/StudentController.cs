@@ -7,11 +7,14 @@ namespace SSluzba.Controllers
 {
     public class StudentController
     {
-        private StudentDAO _studentDAO;
+        private readonly StudentDAO _studentDAO = new();
+        private readonly AddressController _addressController = new();
+        private readonly IndexController _indexController = new();
+        private readonly ExamGradeController _examGradeController = new();
 
         public StudentController()
         {
-            _studentDAO = new StudentDAO();
+
         }
 
         public void Subscribe(IObserver observer)
@@ -19,18 +22,11 @@ namespace SSluzba.Controllers
             _studentDAO.Subscribe(observer);
         }
 
-        // Ova metoda pokreće AddStudentView i delegira dodavanje novog studenta
-        public void OpenAddStudentView()
-        {
-            var addStudentWindow = new AddStudentView();
-        }
-
         public void AddStudent(Student student)
         {
             _studentDAO.Add(student);
         }
 
-        // Ova metoda pokreće UpdateStudentView i delegira ažuriranje studenta
         public void OpenUpdateStudentView(SSluzba.Models.Student student)
         {
             var updateStudentWindow = new UpdateStudentView(student);
@@ -54,6 +50,37 @@ namespace SSluzba.Controllers
         public List<Student> GetAllStudents()
         {
             return _studentDAO.GetAll();
+        }
+
+        public List<dynamic> GetStudentDetails()
+        {
+            var students = GetAllStudents();
+            var studentDetails = new List<dynamic>();
+
+            foreach (var student in students)
+            {
+                var address = _addressController.GetAddressById(student.AddressId)?.ToString() ?? "N/A";
+                var index = _indexController.GetIndexById(student.IndexId)?.ToString() ?? "N/A";
+                var averageGrade = _examGradeController.GetAverageGrade(student.Id);
+
+                studentDetails.Add(new
+                {
+                    student.Id,
+                    student.Surname,
+                    student.Name,
+                    student.CurrentYear,
+                    AverageGrade = averageGrade,
+                    Index = index,
+                    Address = address
+                });
+            }
+
+            return studentDetails;
+        }
+
+        public List<ExamGrade> GetExamGradesForStudent(int studentId)
+        {
+            return _examGradeController.GetExamGradesForStudent(studentId);
         }
     }
 }

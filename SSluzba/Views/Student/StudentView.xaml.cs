@@ -1,68 +1,42 @@
 ﻿using SSluzba.Controllers;
-using SSluzba.Models;
 using SSluzba.Observer;
-using SSluzba.Views.Index;
-using System;
+using System.Collections.ObjectModel;
 using System.Windows;
-using System.Windows.Controls;
 
 namespace SSluzba.Views.Student
 {
     public partial class StudentView : Window, IObserver
     {
-        private StudentController _controller;
-        private ExamGradeController _examGradeController;
-        private IndexController _indexController;
-        private AddressController _addressController;
+        private readonly StudentController _controller;
+        private ObservableCollection<dynamic> _studentDetails;
 
         public StudentView() : base()
         {
             InitializeComponent();
 
             _controller = new StudentController();
-            _examGradeController = new ExamGradeController();
-            _indexController = new IndexController();
-            _addressController = new AddressController();
-
             _controller.Subscribe(this);
-            _indexController.Subscribe(this);
-            _examGradeController.Subscribe(this);
-            _addressController.Subscribe(this);
+
+            _studentDetails = new ObservableCollection<dynamic>();
+            StudentListView.ItemsSource = _studentDetails; // Prilagođeno za ListView
 
             RefreshStudentList();
         }
-
 
         public void Update()
         {
             RefreshStudentList();
         }
 
-private void RefreshStudentList()
+        private void RefreshStudentList()
         {
-            var students = _controller.GetAllStudents();
-            var studentDetails = new List<dynamic>();
+            _studentDetails.Clear();
+            var studentDetails = _controller.GetStudentDetails();
 
-            foreach (var student in students)
+            foreach (var detail in studentDetails)
             {
-                var address = _addressController.GetAddressById(student.AddressId)?.ToString() ?? "N/A";
-                var index = _indexController.GetIndexById(student.IndexId)?.ToString() ?? "N/A";
-                var averageGrade = _examGradeController.GetAverageGrade(student.Id);
-
-                studentDetails.Add(new
-                {
-                    student.Id,
-                    student.Surname,
-                    student.Name,
-                    student.CurrentYear,
-                    AverageGrade = averageGrade,
-                    Index = index,
-                    Address = address
-                });
+                _studentDetails.Add(detail);
             }
-
-            StudentDataGrid.ItemsSource = null;
-            StudentDataGrid.ItemsSource = studentDetails;
         }
 
         private void AddStudentButton_Click(object sender, RoutedEventArgs e)
@@ -73,9 +47,23 @@ private void RefreshStudentList()
 
         private void UpdateStudentButton_Click(object sender, RoutedEventArgs e)
         {
-            if (StudentDataGrid.SelectedItem is Models.Student selectedStudent)
+            if (StudentListView.SelectedItem is not null)
             {
-                _controller.OpenUpdateStudentView(selectedStudent);
+                // Pretpostavljamo da je `SelectedItem` dinamički objekt sa ID svojstvom
+                var selectedStudent = StudentListView.SelectedItem;
+
+                // Ako imaš potrebu da koristiš `Models.Student`, možeš ovde da pozoveš podatke iz baze ili kontrolera
+                int studentId = (int)selectedStudent.GetType().GetProperty("Id").GetValue(selectedStudent);
+                var studentToUpdate = _controller.GetAllStudents().FirstOrDefault(s => s.Id == studentId);
+
+                if (studentToUpdate != null)
+                {
+                    _controller.OpenUpdateStudentView(studentToUpdate);
+                }
+                else
+                {
+                    MessageBox.Show("Could not find the selected student for updating.", "Update Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
             else
             {
@@ -83,11 +71,23 @@ private void RefreshStudentList()
             }
         }
 
+
         private void DeleteStudentButton_Click(object sender, RoutedEventArgs e)
         {
-            if (StudentDataGrid.SelectedItem is Models.Student selectedStudent)
+            if (StudentListView.SelectedItem is not null)
             {
-                _controller.DeleteStudent(selectedStudent.Id);
+                var selectedStudent = StudentListView.SelectedItem;
+                int studentId = (int)selectedStudent.GetType().GetProperty("Id").GetValue(selectedStudent);
+                var studentToDelete = _controller.GetAllStudents().FirstOrDefault(s => s.Id == studentId);
+
+                if (studentToDelete != null)
+                {
+                    _controller.DeleteStudent(studentToDelete.Id);
+                }
+                else
+                {
+                    MessageBox.Show("Could not find the selected student for deletion.", "Delete Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
             else
             {
@@ -97,15 +97,27 @@ private void RefreshStudentList()
 
         private void ManageExamGradesButton_Click(object sender, RoutedEventArgs e)
         {
-            if (StudentDataGrid.SelectedItem is Models.Student selectedStudent)
+            if (StudentListView.SelectedItem is not null)
             {
-                ExamGradesView examGradesView = new ExamGradesView(_examGradeController.GetExamGradesForStudent(selectedStudent.Id));
-                examGradesView.ShowDialog();
+                var selectedStudent = StudentListView.SelectedItem;
+                int studentId = (int)selectedStudent.GetType().GetProperty("Id").GetValue(selectedStudent);
+                var studentToManage = _controller.GetAllStudents().FirstOrDefault(s => s.Id == studentId);
+
+                if (studentToManage != null)
+                {
+                    ExamGradesView examGradesView = new ExamGradesView(_controller.GetExamGradesForStudent(studentToManage.Id));
+                    examGradesView.ShowDialog();
+                }
+                else
+                {
+                    MessageBox.Show("Could not find the selected student to manage exam grades.", "Manage Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
             else
             {
                 MessageBox.Show("Please select a student to manage exam grades.", "Manage Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
     }
 }

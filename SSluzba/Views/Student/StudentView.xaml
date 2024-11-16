@@ -3,20 +3,22 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Student View" Height="450" Width="800">
     <Grid>
-        <!-- DataGrid za prikaz studenata -->
-        <DataGrid x:Name="StudentDataGrid" AutoGenerateColumns="False" HorizontalAlignment="Left" 
-                  Height="200" Margin="10,10,0,0" VerticalAlignment="Top" Width="760">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="50"/>
-                <DataGridTextColumn Header="Surname" Binding="{Binding Surname}" Width="150"/>
-                <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="150"/>
-                <DataGridTextColumn Header="Year" Binding="{Binding CurrentYear}" Width="100"/>
-                <DataGridTextColumn Header="Average Grade" Binding="{Binding AverageGrade}" Width="100"/>
-                <DataGridTextColumn Header="Index" Binding="{Binding Index}" Width="150"/>
-                <!-- Prikaz adrese koristeći Address.ToString() -->
-                <DataGridTextColumn Header="Address" Binding="{Binding Address}" Width="200"/>
-            </DataGrid.Columns>
-        </DataGrid>
+        <!-- ListView za prikaz studenata -->
+        <ListView x:Name="StudentListView" HorizontalAlignment="Left" 
+                  Height="200" Margin="10,10,0,0" VerticalAlignment="Top" Width="760"
+                  ItemsSource="{Binding _studentDetails}" SelectionMode="Single">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}" Width="50"/>
+                    <GridViewColumn Header="Surname" DisplayMemberBinding="{Binding Surname}" Width="150"/>
+                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" Width="150"/>
+                    <GridViewColumn Header="Year" DisplayMemberBinding="{Binding CurrentYear}" Width="100"/>
+                    <GridViewColumn Header="Average Grade" DisplayMemberBinding="{Binding AverageGrade}" Width="100"/>
+                    <GridViewColumn Header="Index" DisplayMemberBinding="{Binding Index}" Width="150"/>
+                    <GridViewColumn Header="Address" DisplayMemberBinding="{Binding Address}" Width="200"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
 
         <!-- Dugmad za različite akcije sa studentima -->
         <Button Content="Add New Student" HorizontalAlignment="Left" Margin="10,220,0,0" 
