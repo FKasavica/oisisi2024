@@ -19,8 +19,13 @@
             <Label Content="Email:" />
             <TextBox x:Name="EmailInput" Width="200" />
 
-            <Label Content="Index ID:" />
-            <TextBox x:Name="IndexIdInput" Width="200" IsReadOnly="True" />
+            <!-- Index Information Fields (Horizontal StackPanel) -->
+            <Label Content="Index Information:" />
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <TextBox x:Name="MajorCodeInput" Width="60" Margin="0,0,5,0" />
+                <TextBox x:Name="EnrollmentNumberInput" Width="60" Margin="0,0,5,0" />
+                <TextBox x:Name="EnrollmentYearInput" Width="60" />
+            </StackPanel>
 
             <Label Content="Current Year:" />
             <TextBox x:Name="CurrentYearInput" Width="200" />
@@ -31,8 +36,8 @@
                 <ComboBoxItem Content="SelfFinanced" />
             </ComboBox>
 
-            <Label Content="Average Grade:" />
-            <TextBox x:Name="AverageGradeInput" Width="200" />
+            <Label Content="Address:" />
+            <ComboBox x:Name="AddressComboBox" Width="300"  />
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
                 <Button Content="OK" Width="80" Margin="5" Click="OkButton_Click" />

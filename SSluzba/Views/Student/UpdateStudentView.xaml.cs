@@ -9,58 +9,76 @@ namespace SSluzba.Views
     public partial class UpdateStudentView : Window
     {
         public Models.Student Student { get; private set; }
-        private StudentController _controller;
-        private ExamGradeController _examGradeController;
-        public UpdateStudentView(Models.Student student)
+        private StudentController _controller = new();
+        private AddressController _addressController = new();
+        private IndexController _indexController = new();
+
+        public UpdateStudentView(int studentId)
         {
             InitializeComponent();
 
-            // Popunjavanje polja sa podacima o studentu
-            if (student != null)
-            {
-                SurnameInput.Text = student.Surname;
-                NameInput.Text = student.Name;
-                DateOfBirthInput.SelectedDate = student.DateOfBirth;
-                PhoneNumberInput.Text = student.PhoneNumber;
-                EmailInput.Text = student.Email;
-                IndexIdInput.Text = student.IndexId.ToString();
-                CurrentYearInput.Text = student.CurrentYear.ToString();
-                StatusInput.SelectedItem = student.Status == Status.Budget ? StatusInput.Items[0] : StatusInput.Items[1];
-            }
+            // Preuzmi podatke iz kontrolera
+            var (student, majorCode, enrollmentNumber, enrollmentYear, allAddresses, selectedAddress, status) = _controller.GetStudentDataForUpdate(studentId);
+            Student = student;
+
+            // Postavi vrednosti u UI elemente
+            SurnameInput.Text = Student.Surname;
+            NameInput.Text = Student.Name;
+            DateOfBirthInput.SelectedDate = Student.DateOfBirth;
+            PhoneNumberInput.Text = Student.PhoneNumber;
+            EmailInput.Text = Student.Email;
+            CurrentYearInput.Text = Student.CurrentYear.ToString();
+
+            // Postavi status
+            StatusInput.SelectedItem = StatusInput.Items
+                .Cast<ComboBoxItem>()
+                .FirstOrDefault(item => item.Content.ToString() == status);
+
+            // Postavi adresu
+            AddressComboBox.ItemsSource = allAddresses;
+            AddressComboBox.SelectedItem = selectedAddress;
+
+            // Postavi vrednosti za indeks
+            MajorCodeInput.Text = majorCode;
+            EnrollmentNumberInput.Text = enrollmentNumber.ToString();
+            EnrollmentYearInput.Text = enrollmentYear.ToString();
+        }
+
+
+        private void LoadAddresses()
+        {
+            var addresses = _addressController.GetAllAddresses();
+            AddressComboBox.ItemsSource = addresses;
         }
 
         private void OkButton_Click(object sender, RoutedEventArgs e)
         {
-            // Validacija unosa
-            if (string.IsNullOrWhiteSpace(SurnameInput.Text) ||
-                string.IsNullOrWhiteSpace(NameInput.Text) ||
-                DateOfBirthInput.SelectedDate == null ||
-                string.IsNullOrWhiteSpace(PhoneNumberInput.Text) ||
-                string.IsNullOrWhiteSpace(EmailInput.Text) ||
-                !int.TryParse(IndexIdInput.Text, out int indexId) ||
-                !int.TryParse(CurrentYearInput.Text, out int currentYear) ||
-                StatusInput.SelectedItem == null )
+            try
             {
-                MessageBox.Show("Please fill in all fields correctly.", "Input Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
+                // Create updated student through controller logic
+                Student = _controller.UpdateExistingStudent(
+                    Student.Id,
+                    SurnameInput.Text,
+                    NameInput.Text,
+                    DateOfBirthInput.SelectedDate,
+                    PhoneNumberInput.Text,
+                    EmailInput.Text,
+                    MajorCodeInput.Text,
+                    EnrollmentNumberInput.Text,
+                    EnrollmentYearInput.Text,
+                    CurrentYearInput.Text,
+                    StatusInput.SelectedItem,
+                    AddressComboBox.SelectedItem
+                );
+
+                DialogResult = true;
+                Close();
             }
-
-            // Ažuriranje podataka o studentu
-            Student = new Models.Student
+            catch (Exception ex)
             {
-                Id = indexId,
-                Surname = SurnameInput.Text,
-                Name = NameInput.Text,
-                DateOfBirth = DateOfBirthInput.SelectedDate.Value,
-                PhoneNumber = PhoneNumberInput.Text,
-                Email = EmailInput.Text,
-                IndexId = indexId,
-                CurrentYear = currentYear,
-                Status = (Status)Enum.Parse(typeof(Status), ((ComboBoxItem)StatusInput.SelectedItem).Content.ToString()),
-            };
-
-            DialogResult = true;
-            Close();
+                //MessageBox.Show(ex.Message, "Input Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Prslo");
+            }
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
