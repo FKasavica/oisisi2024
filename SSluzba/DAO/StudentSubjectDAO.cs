@@ -1,53 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
 using System.Linq;
 using SSluzba.Models;
+using SSluzba.Repositories;
 
 namespace SSluzba.DAO
 {
     public class StudentSubjectDAO
     {
-        private readonly string FilePath = "data" + Path.DirectorySeparatorChar + "studentsubjects.csv";
         private List<StudentSubject> _studentSubjects;
+        private readonly StudentSubjectRepository _repository;
 
         public StudentSubjectDAO()
         {
-            _studentSubjects = LoadStudentSubjects();
-        }
-
-        private List<StudentSubject> LoadStudentSubjects()
-        {
-            List<StudentSubject> studentSubjects = new List<StudentSubject>();
-            if (File.Exists(FilePath))
-            {
-                foreach (var line in File.ReadLines(FilePath))
-                {
-                    var values = line.Split(',');
-                    StudentSubject studentSubject = new StudentSubject();
-                    studentSubject.FromCSV(values);
-                    studentSubjects.Add(studentSubject);
-                }
-            }
-            return studentSubjects;
-        }
-
-        public void SaveStudentSubjects()
-        {
-            using (StreamWriter sw = new StreamWriter(FilePath))
-            {
-                foreach (var studentSubject in _studentSubjects)
-                {
-                    sw.WriteLine(string.Join(",", studentSubject.ToCSV()));
-                }
-            }
+            _repository = new StudentSubjectRepository();
+            _studentSubjects = _repository.LoadStudentSubjects();
         }
 
         public void AddStudentSubject(StudentSubject studentSubject)
         {
             studentSubject.Id = GetNextId();
             _studentSubjects.Add(studentSubject);
-            SaveStudentSubjects();
+            _repository.SaveStudentSubjects(_studentSubjects);
         }
 
         public void UpdateStudentSubject(StudentSubject studentSubject)
@@ -58,14 +31,14 @@ namespace SSluzba.DAO
                 existing.StudentId = studentSubject.StudentId;
                 existing.SubjectId = studentSubject.SubjectId;
                 existing.Passed = studentSubject.Passed;
-                SaveStudentSubjects();
+                _repository.SaveStudentSubjects(_studentSubjects);
             }
         }
 
         public void DeleteStudentSubject(int id)
         {
             _studentSubjects.RemoveAll(ss => ss.Id == id);
-            SaveStudentSubjects();
+            _repository.SaveStudentSubjects(_studentSubjects);
         }
 
         public List<StudentSubject> GetAll()
