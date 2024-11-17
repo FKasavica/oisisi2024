@@ -100,7 +100,7 @@ namespace SSluzba.Controllers
                     AverageGrade = averageGrade,
                     Index = indexString,
                     Address = addressString,
-                    Status = student.Status
+                    student.Status
                 });
             }
 
