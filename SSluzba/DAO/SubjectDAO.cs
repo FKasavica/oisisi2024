@@ -43,7 +43,7 @@ namespace SSluzba.DAO
             }
         }
 
-        public void Remove(int id)
+        public void Delete(int id)
         {
             var subject = _subjects.FirstOrDefault(s => s.Id == id);
             if (subject != null)

@@ -54,5 +54,10 @@ namespace SSluzba.Controllers
         {
             return _professorDAO.GetAll();
         }
+
+        public Professor GetProfessorById(int professorId)
+        {
+            return _professorDAO.GetAll().FirstOrDefault(p => p.Id == professorId);
+        }
     }
 }

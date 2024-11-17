@@ -1,16 +1,22 @@
-﻿using System.Collections.Generic;
-using SSluzba.DAO;
+﻿using SSluzba.DAO;
 using SSluzba.Models;
+using SSluzba.Observer;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace SSluzba.Controllers
 {
     public class StudentSubjectController
     {
-        private StudentSubjectDAO _studentSubjectDAO;
+        private readonly StudentSubjectDAO _studentSubjectDAO = new();
 
         public StudentSubjectController()
         {
-            _studentSubjectDAO = new StudentSubjectDAO();
+            
+        }
+        public void Subscribe(IObserver observer)
+        {
+            _studentSubjectDAO.Subscribe(observer);
         }
 
         public List<StudentSubject> GetAllStudentSubjects()
@@ -18,15 +24,19 @@ namespace SSluzba.Controllers
             return _studentSubjectDAO.GetAll();
         }
 
-        public void AddStudentSubject(int studentId, int subjectId, bool passed)
+        public List<StudentSubject> GetSubjectsByStudentId(int studentId)
         {
-            StudentSubject newStudentSubject = new StudentSubject
-            {
-                StudentId = studentId,
-                SubjectId = subjectId,
-                Passed = passed
-            };
-            _studentSubjectDAO.AddStudentSubject(newStudentSubject);
+            return _studentSubjectDAO.GetAll().Where(ss => ss.StudentId == studentId).ToList();
+        }
+
+        public List<StudentSubject> GetStudentsBySubjectId(int subjectId)
+        {
+            return _studentSubjectDAO.GetAll().Where(ss => ss.SubjectId == subjectId).ToList();
+        }
+
+        public void AddStudentSubject(StudentSubject studentSubject)
+        {
+            _studentSubjectDAO.AddStudentSubject(studentSubject);
         }
 
         public void UpdateStudentSubject(StudentSubject studentSubject)
@@ -37,11 +47,6 @@ namespace SSluzba.Controllers
         public void DeleteStudentSubject(int id)
         {
             _studentSubjectDAO.DeleteStudentSubject(id);
-        }
-
-        public List<StudentSubject> GetSubjectsForStudent(int studentId)
-        {
-            return _studentSubjectDAO.GetAll().Where(ss => ss.StudentId == studentId).ToList();
         }
     }
 }

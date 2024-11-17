@@ -1,11 +1,20 @@
 ﻿<Window x:Class="SSluzba.Views.Subject.SubjectView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Subject View" Height="450" Width="833">
+        Title="Subject View" Height="600" Width="1000">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="3*" />
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- ListView for subjects -->
         <ListView x:Name="SubjectListView" 
                   Margin="10"
-                  ItemsSource="{Binding _subjectDetails}">
+                  ItemsSource="{Binding _subjectDetails}" 
+                  SelectionChanged="SubjectListView_SelectionChanged">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}" Width="50"/>
@@ -13,10 +22,53 @@
                     <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" Width="200"/>
                     <GridViewColumn Header="Semester" DisplayMemberBinding="{Binding Semester}" Width="100"/>
                     <GridViewColumn Header="Study Year" DisplayMemberBinding="{Binding StudyYear}" Width="100"/>
-                    <GridViewColumn Header="Professor ID" DisplayMemberBinding="{Binding ProfessorId}" Width="100"/>
+                    <GridViewColumn Header="Professor" DisplayMemberBinding="{Binding ProfessorName}" Width="200"/>
                     <GridViewColumn Header="ESPB Points" DisplayMemberBinding="{Binding EspbPoints}" Width="100"/>
                 </GridView>
             </ListView.View>
         </ListView>
+
+        <!-- Label for passed students -->
+        <TextBlock Text="Students who passed the subject:" 
+                   Grid.Row="1" Margin="10,5,10,0" 
+                   FontWeight="Bold"/>
+
+        <!-- ListView for students who passed the subject -->
+        <ListView x:Name="PassedStudentsListView" 
+                  Grid.Row="1" 
+                  Margin="10,25,10,0">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Student ID" DisplayMemberBinding="{Binding Id}" Width="100"/>
+                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" Width="200"/>
+                    <GridViewColumn Header="Surname" DisplayMemberBinding="{Binding Surname}" Width="200"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <!-- Label for failed students -->
+        <TextBlock Text="Students who did not pass the subject:" 
+                   Grid.Row="2" Margin="10,5,10,0" 
+                   FontWeight="Bold"/>
+
+        <!-- ListView for students who did not pass the subject -->
+        <ListView x:Name="FailedStudentsListView" 
+                  Grid.Row="2" 
+                  Margin="10,25,10,0">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Student ID" DisplayMemberBinding="{Binding Id}" Width="100"/>
+                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" Width="200"/>
+                    <GridViewColumn Header="Surname" DisplayMemberBinding="{Binding Surname}" Width="200"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <!-- Buttons for subject actions -->
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+            <Button Content="Add Subject" Width="120" Margin="5" Click="AddSubjectButton_Click"/>
+            <Button Content="Update Subject" Width="120" Margin="5" Click="UpdateSubjectButton_Click"/>
+            <Button Content="Delete Subject" Width="120" Margin="5" Click="DeleteSubjectButton_Click"/>
+        </StackPanel>
     </Grid>
 </Window>

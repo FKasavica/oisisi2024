@@ -276,5 +276,10 @@ namespace SSluzba.Controllers
                 throw new Exception($"Greška prilikom kreiranja ili ažuriranja studenta: {ex.Message}", ex);
             }
         }
+
+        public Student GetStudentById(int studentId)
+        {
+            return _studentDAO.GetAll().FirstOrDefault(s => s.Id == studentId);
+        }
     }
 }
