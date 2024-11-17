@@ -18,47 +18,69 @@ namespace SSluzba.Views.Student
             _controller.Subscribe(this);
 
             _studentDetails = new ObservableCollection<dynamic>();
-            StudentListView.ItemsSource = _studentDetails; // Prilagođeno za ListView
+            StudentListView.ItemsSource = _studentDetails;
 
             RefreshStudentList();
         }
 
         public void Update()
         {
-            RefreshStudentList();
+            // Umesto korišćenja `Clear()`, osvežite promene
+            RefreshStudentList(); // ili koristite metode za pojedinačne izmene ako je moguće
         }
 
         private void RefreshStudentList()
         {
-            _studentDetails.Clear();
-            var studentDetails = _controller.GetStudentDetails();
+            var currentDetails = _controller.GetStudentDetails();
 
-            foreach (var detail in studentDetails)
+            // Uklanjanje elemenata koji više ne postoje
+            for (int i = _studentDetails.Count - 1; i >= 0; i--)
             {
-                _studentDetails.Add(detail);
+                if (!currentDetails.Contains(_studentDetails[i]))
+                {
+                    _studentDetails.RemoveAt(i);
+                }
+            }
+
+            // Dodavanje novih ili ažuriranih elemenata
+            foreach (var detail in currentDetails)
+            {
+                if (!_studentDetails.Contains(detail))
+                {
+                    _studentDetails.Add(detail);
+                }
             }
         }
 
         private void AddStudentButton_Click(object sender, RoutedEventArgs e)
         {
             var addStudentWindow = new AddStudentView();
-            addStudentWindow.ShowDialog();
+            if (addStudentWindow.ShowDialog() == true)
+            {
+                var newStudent = addStudentWindow._student;
+                _controller.AddStudent(newStudent);
+                //_studentDetails.Add(_controller.GetStudentDetails().Find(s => s.Id == newStudent.Id));
+            }
         }
 
         private void UpdateStudentButton_Click(object sender, RoutedEventArgs e)
         {
             if (StudentListView.SelectedItem is not null)
             {
-                // Pretpostavljamo da je `SelectedItem` dinamički objekt sa ID svojstvom
                 var selectedStudent = StudentListView.SelectedItem;
-
-                // Ako imaš potrebu da koristiš `Models.Student`, možeš ovde da pozoveš podatke iz baze ili kontrolera
                 int studentId = (int)selectedStudent.GetType().GetProperty("Id").GetValue(selectedStudent);
                 var studentToUpdate = _controller.GetAllStudents().FirstOrDefault(s => s.Id == studentId);
 
                 if (studentToUpdate != null)
                 {
                     _controller.OpenUpdateStudentView(studentToUpdate);
+                    // Osveži izmenjeni element nakon ažuriranja
+                    var updatedStudentDetail = _controller.GetStudentDetails().Find(s => s.Id == studentId);
+                    int index = _studentDetails.IndexOf(selectedStudent);
+                    if (index >= 0)
+                    {
+                        _studentDetails[index] = updatedStudentDetail;
+                    }
                 }
                 else
                 {
@@ -71,7 +93,6 @@ namespace SSluzba.Views.Student
             }
         }
 
-
         private void DeleteStudentButton_Click(object sender, RoutedEventArgs e)
         {
             if (StudentListView.SelectedItem is not null)
@@ -83,6 +104,7 @@ namespace SSluzba.Views.Student
                 if (studentToDelete != null)
                 {
                     _controller.DeleteStudent(studentToDelete.Id);
+                    _studentDetails.Remove(selectedStudent); // Uklanjanje iz kolekcije
                 }
                 else
                 {
@@ -105,7 +127,7 @@ namespace SSluzba.Views.Student
 
                 if (studentToManage != null)
                 {
-                    ExamGradesView examGradesView = new ExamGradesView(_controller.GetExamGradesForStudent(studentToManage.Id));
+                    var examGradesView = new ExamGradesView(_controller.GetExamGradesForStudent(studentToManage.Id));
                     examGradesView.ShowDialog();
                 }
                 else

@@ -7,12 +7,13 @@ namespace SSluzba.Repositories
 {
     public class StudentRepository
     {
-        private readonly string FilePath;
+        private readonly string FilePath = @"D:" + Path.DirectorySeparatorChar + "Github" + Path.DirectorySeparatorChar + "oisisi2024" + Path.DirectorySeparatorChar + "SSluzba" + Path.DirectorySeparatorChar + "Data" +  Path.DirectorySeparatorChar + "students.csv";
+
 
         public StudentRepository()
-        {
-            FilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "students.csv");
-        }
+        {}
+
+
 
         public List<Student> LoadStudents()
         {
@@ -32,13 +33,22 @@ namespace SSluzba.Repositories
 
         public void SaveStudents(List<Student> students)
         {
-            using (StreamWriter sw = new StreamWriter(FilePath))
+            try
             {
-                foreach (var student in students)
+                using (StreamWriter sw = new StreamWriter(FilePath))
                 {
-                    sw.WriteLine(string.Join(",", student.ToCSV()));
+                    foreach (var student in students)
+                    {
+                        sw.WriteLine(string.Join(",", student.ToCSV()));
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+                // Prikaz poruke za grešku ili logovanje greške
+                Console.WriteLine($"Error saving students: {ex.Message}");
+            }
         }
+
     }
 }

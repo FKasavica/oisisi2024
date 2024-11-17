@@ -20,9 +20,9 @@
             <TextBox x:Name="EmailInput" Width="200" />
 
             <Label Content="Index Information:" />
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <TextBox x:Name="MajorCodeInput" Width="60" Margin="0,0,5,0" />
-                <TextBox x:Name="EnrollmentNumberInput" Width="60" Margin="0,0,5,0" />
+                <TextBox x:Name="EnrollmentNumberInput" Width="60" />
                 <TextBox x:Name="EnrollmentYearInput" Width="60" />
             </StackPanel>
 
@@ -37,7 +37,8 @@
 
             <!-- Dodavanje ComboBox-a za izbor postojeće adrese -->
             <Label Content="Address:" />
-            <ComboBox x:Name="AddressComboBox" Width="300" DisplayMemberPath="FullAddress" />
+            <ComboBox x:Name="AddressComboBox" Width="300" />
+
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
                 <Button Content="OK" Width="80" Margin="5" Click="OkButton_Click" />

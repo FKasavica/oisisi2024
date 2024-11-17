@@ -7,11 +7,12 @@ namespace SSluzba.Repositories
 {
     public class IndexRepository
     {
-        private readonly string FilePath;
+        //private readonly string FilePath = @"D:" + Path.DirectorySeparatorChar + "Github" + Path.DirectorySeparatorChar + "oisisi2024" + Path.DirectorySeparatorChar + "SSluzba" + Path.DirectorySeparatorChar + "Data" + Path.DirectorySeparatorChar + "indexes.csv";
+        private readonly string FilePath = @"D:\Github\oisisi2024\SSluzba\Data\indexes.csv";
 
         public IndexRepository()
         {
-            FilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "indices.csv");
+            //FilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "indexes.csv");
         }
 
         public List<Models.Index> LoadIndices()

@@ -5,8 +5,8 @@ using System.Runtime.CompilerServices;
 
 public enum Status
 {
-    Budget = 'B',
-    SelfFinanced = 'S'
+    Budget,
+    SelfFinanced
 }
 
 namespace SSluzba.Models

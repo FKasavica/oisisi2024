@@ -1,49 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
 using System.Linq;
 using SSluzba.Models;
 using SSluzba.Observer;
+using SSluzba.Repositories; // Pretpostavka da postoji AddressRepository
 
 namespace SSluzba.DAO
 {
     public class AddressDAO : ISubject
     {
-        private readonly string FilePath = "data" + Path.DirectorySeparatorChar + "addresses.csv";
+        private AddressRepository _repository;
         private List<Address> _addresses;
         private List<IObserver> _observers;
 
         public AddressDAO()
         {
-            _addresses = LoadAddresses();
+            _repository = new AddressRepository();
+            _addresses = _repository.LoadAddresses(); // Učitavanje podataka iz repository-a
             _observers = new List<IObserver>();
-        }
-
-        private List<Address> LoadAddresses()
-        {
-            List<Address> addresses = new List<Address>();
-            if (File.Exists(FilePath))
-            {
-                foreach (var line in File.ReadLines(FilePath))
-                {
-                    var values = line.Split(',');
-                    Address address = new Address();
-                    address.FromCSV(values);
-                    addresses.Add(address);
-                }
-            }
-            return addresses;
         }
 
         private void SaveAddresses()
         {
-            using (StreamWriter sw = new StreamWriter(FilePath))
-            {
-                foreach (var address in _addresses)
-                {
-                    sw.WriteLine(string.Join(",", address.ToCSV()));
-                }
-            }
+            _repository.SaveAddresses(_addresses); // Čuvanje podataka putem repository-a
         }
 
         public int NextId()
