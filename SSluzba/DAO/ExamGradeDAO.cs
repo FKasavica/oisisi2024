@@ -1,20 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
+using System.Linq;
 using SSluzba.Models;
 using SSluzba.Observer;
+using SSluzba.Repositories;
 
 namespace SSluzba.DAO
 {
     public class ExamGradeDAO : ISubject
     {
-        private const string FilePath = "../../Data/exam_grades.csv";
         private List<ExamGrade> _examGrades;
         private List<IObserver> _observers;
+        private ExamGradeRepository _repository;
 
         public ExamGradeDAO()
         {
-            _examGrades = LoadExamGrades();
+            _repository = new ExamGradeRepository();
+            _examGrades = _repository.LoadExamGrades();
             _observers = new List<IObserver>();
         }
 
@@ -22,7 +23,7 @@ namespace SSluzba.DAO
         {
             examGrade.Id = GetNextId();
             _examGrades.Add(examGrade);
-            SaveExamGrades();
+            _repository.SaveExamGrades(_examGrades);
             NotifyObservers();
         }
 
@@ -35,7 +36,7 @@ namespace SSluzba.DAO
                 existingGrade.SubjectId = updatedGrade.SubjectId;
                 existingGrade.NumericGrade = updatedGrade.NumericGrade;
                 existingGrade.ExamDate = updatedGrade.ExamDate;
-                SaveExamGrades();
+                _repository.SaveExamGrades(_examGrades);
                 NotifyObservers();
             }
         }
@@ -43,7 +44,7 @@ namespace SSluzba.DAO
         public void Delete(int id)
         {
             _examGrades.RemoveAll(g => g.Id == id);
-            SaveExamGrades();
+            _repository.SaveExamGrades(_examGrades);
             NotifyObservers();
         }
 
@@ -57,37 +58,9 @@ namespace SSluzba.DAO
             return _examGrades.Where(g => g.StudentId == studentId).ToList();
         }
 
-
-        private List<ExamGrade> LoadExamGrades()
-        {
-            List<ExamGrade> examGrades = new List<ExamGrade>();
-            if (File.Exists(FilePath))
-            {
-                foreach (var line in File.ReadLines(FilePath))
-                {
-                    var values = line.Split(',');
-                    ExamGrade examGrade = new ExamGrade();
-                    examGrade.FromCSV(values);
-                    examGrades.Add(examGrade);
-                }
-            }
-            return examGrades;
-        }
-
         private int GetNextId()
         {
             return _examGrades.Count == 0 ? 1 : _examGrades[^1].Id + 1;
-        }
-
-        private void SaveExamGrades()
-        {
-            using (var sw = new StreamWriter(FilePath))
-            {
-                foreach (var grade in _examGrades)
-                {
-                    sw.WriteLine(string.Join(",", grade.ToCSV()));
-                }
-            }
         }
 
         public void Subscribe(IObserver observer)

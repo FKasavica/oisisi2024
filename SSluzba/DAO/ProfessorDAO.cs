@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using SSluzba.Models;
 using SSluzba.Observer;
+using SSluzba.Repositories;
 
 namespace SSluzba.DAO
 {
@@ -10,10 +10,12 @@ namespace SSluzba.DAO
     {
         private List<IObserver> _observers;
         private List<Professor> _professors;
+        private ProfessorRepository _repository;
 
         public ProfessorDAO()
         {
-            _professors = new List<Professor>();
+            _repository = new ProfessorRepository();
+            _professors = _repository.LoadProfessors();
             _observers = new List<IObserver>();
         }
 
@@ -26,6 +28,7 @@ namespace SSluzba.DAO
         {
             professor.Id = NextId();
             _professors.Add(professor);
+            _repository.SaveProfessors(_professors);
             NotifyObservers();
         }
 
@@ -43,6 +46,7 @@ namespace SSluzba.DAO
                 existingProfessor.Title = updatedProfessor.Title;
                 existingProfessor.YearsOfExperience = updatedProfessor.YearsOfExperience;
                 existingProfessor.Subjects = updatedProfessor.Subjects;
+                _repository.SaveProfessors(_professors);
                 NotifyObservers();
             }
         }
@@ -50,6 +54,7 @@ namespace SSluzba.DAO
         public void Remove(Professor professor)
         {
             _professors.Remove(professor);
+            _repository.SaveProfessors(_professors);
             NotifyObservers();
         }
 

@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using SSluzba.Models;
 using SSluzba.Observer;
+using SSluzba.Repositories;
 
 namespace SSluzba.DAO
 {
@@ -10,10 +10,12 @@ namespace SSluzba.DAO
     {
         private List<IObserver> _observers;
         private List<Department> _departments;
+        private DepartmentRepository _repository;
 
         public DepartmentDAO()
         {
-            _departments = new List<Department>();
+            _repository = new DepartmentRepository();
+            _departments = _repository.LoadDepartments();
             _observers = new List<IObserver>();
         }
 
@@ -21,6 +23,7 @@ namespace SSluzba.DAO
         {
             department.Id = GetNextId();
             _departments.Add(department);
+            _repository.SaveDepartments(_departments);
             NotifyObservers();
         }
 
@@ -33,6 +36,7 @@ namespace SSluzba.DAO
                 existingDepartment.DepartmentName = updatedDepartment.DepartmentName;
                 existingDepartment.HeadOfDepartmentId = updatedDepartment.HeadOfDepartmentId;
                 existingDepartment.ProfessorIdList = updatedDepartment.ProfessorIdList;
+                _repository.SaveDepartments(_departments);
                 NotifyObservers();
             }
         }
@@ -43,6 +47,7 @@ namespace SSluzba.DAO
             if (department != null)
             {
                 _departments.Remove(department);
+                _repository.SaveDepartments(_departments);
                 NotifyObservers();
             }
         }
