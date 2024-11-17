@@ -187,7 +187,7 @@ namespace SSluzba.Models
             Email = values[6];
             IndexId = int.Parse(values[7]);
             CurrentYear = int.Parse(values[8]);
-            Status = values[9] == "B" ? Status.Budget : Status.SelfFinanced;
+            Status = values[9] == "Budget" ? Status.Budget : Status.SelfFinanced;
 
         }
 

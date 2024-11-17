@@ -99,12 +99,14 @@ namespace SSluzba.Controllers
                     student.CurrentYear,
                     AverageGrade = averageGrade,
                     Index = indexString,
-                    Address = addressString
+                    Address = addressString,
+                    Status = student.Status
                 });
             }
 
             return studentDetails;
         }
+
 
         public List<ExamGrade> GetExamGradesForStudent(int studentId)
         {

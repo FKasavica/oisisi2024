@@ -1,11 +1,11 @@
 ﻿<Window x:Class="SSluzba.Views.Student.StudentView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Student View" Height="450" Width="800">
-    <Grid>
+        Title="Student View" Height="450" Width="1057">
+    <Grid Margin="0,0,10,0">
         <!-- ListView za prikaz studenata -->
-        <ListView x:Name="StudentListView" HorizontalAlignment="Left" 
-                  Height="200" Margin="10,10,0,0" VerticalAlignment="Top" Width="760"
+        <ListView x:Name="StudentListView" 
+                  Height="200" Margin="10,10,10,0" VerticalAlignment="Top"
                   ItemsSource="{Binding _studentDetails}" SelectionMode="Single">
             <ListView.View>
                 <GridView>
@@ -16,8 +16,11 @@
                     <GridViewColumn Header="Average Grade" DisplayMemberBinding="{Binding AverageGrade}" Width="100"/>
                     <GridViewColumn Header="Index" DisplayMemberBinding="{Binding Index}" Width="150"/>
                     <GridViewColumn Header="Address" DisplayMemberBinding="{Binding Address}" Width="200"/>
+                    <!-- New column for Status -->
+                    <GridViewColumn Header="Status" DisplayMemberBinding="{Binding Status}" Width="100"/>
                 </GridView>
             </ListView.View>
+
         </ListView>
 
         <!-- Dugmad za različite akcije sa studentima -->
