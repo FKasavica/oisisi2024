@@ -72,5 +72,12 @@ namespace SSluzba.Controllers
                 UpdateExamGrade(updateExamGradeWindow.ExamGrade);
             }
         }
+
+        public ExamGrade GetExamGradeByStudentAndSubject(int studentId, int subjectId)
+        {
+            var grades = _examGradeDAO.GetGradesByStudentId(studentId);
+            return grades.FirstOrDefault(g => g.SubjectId == subjectId);
+        }
+
     }
 }

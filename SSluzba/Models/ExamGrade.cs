@@ -48,7 +48,7 @@ namespace SSluzba.Models
             get => _numericGrade;
             set
             {
-                if (value >= 6 && value <= 10)
+                if (value >= 6.0 && value <= 10.0)
                 {
                     if (value != _numericGrade)
                     {
@@ -106,7 +106,7 @@ namespace SSluzba.Models
             Id = int.Parse(values[0]);
             StudentId = int.Parse(values[1]);
             SubjectId = int.Parse(values[2]);
-            NumericGrade = double.Parse(values[3]);
+            NumericGrade = double.Parse(values[3], System.Globalization.CultureInfo.InvariantCulture);
             ExamDate = DateTime.ParseExact(values[4], "yyyy-MM-dd", null);
         }
 

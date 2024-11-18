@@ -7,18 +7,25 @@ namespace SSluzba.Views.Student
 {
     public partial class StudentView : Window, IObserver
     {
-        private readonly StudentController _controller;
-        private ObservableCollection<dynamic> _studentDetails;
+        private readonly StudentController _controller = new();
+        private ObservableCollection<dynamic> _studentDetails = new();
+        private readonly StudentSubjectController _studentSubjectController = new();
+        private readonly SubjectController _subjectController = new();
+        private readonly ExamGradeController _examGradeController = new();
+
+        private ObservableCollection<dynamic> _passedSubjects = new();
+        private ObservableCollection<dynamic> _failedSubjects = new();
+
 
         public StudentView() : base()
         {
             InitializeComponent();
 
-            _controller = new StudentController();
             _controller.Subscribe(this);
 
-            _studentDetails = new ObservableCollection<dynamic>();
             StudentListView.ItemsSource = _studentDetails;
+            PassedSubjectsListView.ItemsSource = _passedSubjects;
+            FailedSubjectsListView.ItemsSource = _failedSubjects;
 
             RefreshStudentList();
         }
@@ -141,5 +148,50 @@ namespace SSluzba.Views.Student
             }
         }
 
+        private void StudentListView_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            if (StudentListView.SelectedItem is not null)
+            {
+                var selectedStudent = StudentListView.SelectedItem;
+                int studentId = (int)selectedStudent.GetType().GetProperty("Id").GetValue(selectedStudent);
+
+                var passedSubjects = _studentSubjectController.GetSubjectsByStudentId(studentId)
+                    .Where(ss => ss.Passed)
+                    .Select(ss =>
+                    {
+                        var subject = _subjectController.GetSubjectById(ss.SubjectId);
+                        var examGrade = _examGradeController.GetExamGradeByStudentAndSubject(studentId, ss.SubjectId);
+                        if (examGrade == null)
+                        {
+                            MessageBox.Show($"No exam grade found for Student ID: {studentId}, Subject ID: {ss.SubjectId}", "Debug Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                        }
+                        return new
+                        {
+                            subject.Id,
+                            subject.Code,
+                            subject.Name,
+                            Grade = examGrade?.NumericGrade.ToString("0.00")
+                        };
+                    })
+                    .ToList();
+
+                var failedSubjects = _studentSubjectController.GetSubjectsByStudentId(studentId)
+                    .Where(ss => !ss.Passed)
+                    .Select(ss =>
+                    {
+                        var subject = _subjectController.GetSubjectById(ss.SubjectId);
+                        return new
+                        {
+                            subject.Id,
+                            subject.Code,
+                            subject.Name
+                        };
+                    })
+                    .ToList();
+
+                PassedSubjectsListView.ItemsSource = passedSubjects;
+                FailedSubjectsListView.ItemsSource = failedSubjects;
+            }
+        }
     }
 }
