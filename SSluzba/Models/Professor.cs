@@ -159,19 +159,19 @@ namespace SSluzba.Models
             _subjects = new List<Subject>();
         }
 
-        public Professor(int id, string surname, string name, DateTime dateOfBirth, string phoneNumber, string email, string personalIdNumber, string title, int yearsOfExperience, List<Subject> subjects, int addressId)
+        public Professor(int id, string surname, string name, DateTime dateOfBirth, int addressId, string phoneNumber, string email, string personalIdNumber, string title, int yearsOfExperience, List<Subject> subjects)
         {
             Id = id;
             Surname = surname;
             Name = name;
             DateOfBirth = dateOfBirth;
+            AddressId = addressId;
             PhoneNumber = phoneNumber;
             Email = email;
             PersonalIdNumber = personalIdNumber;
             Title = title;
             YearsOfExperience = yearsOfExperience;
             Subjects = subjects;
-            AddressId = addressId;
         }
 
         public string[] ToCSV()
@@ -182,13 +182,13 @@ namespace SSluzba.Models
                 Surname,
                 Name,
                 DateOfBirth.ToString("yyyy-MM-dd"),
+                AddressId.ToString(),
                 PhoneNumber,
                 Email,
                 PersonalIdNumber,
                 Title,
                 YearsOfExperience.ToString(),
                 string.Join(", ", Subjects.Select(s => s.Id)),
-                AddressId.ToString()
             };
             return csvValues;
         }
@@ -199,12 +199,12 @@ namespace SSluzba.Models
             Surname = values[1];
             Name = values[2];
             DateOfBirth = DateTime.ParseExact(values[3], "yyyy-MM-dd", null);
-            PhoneNumber = values[4];
-            Email = values[5];
-            PersonalIdNumber = values[6];
-            Title = values[7];
-            YearsOfExperience = int.Parse(values[8]);
-            AddressId = int.Parse(values[9]);
+            AddressId = int.Parse(values[4]);
+            PhoneNumber = values[5];
+            Email = values[6];
+            PersonalIdNumber = values[7];
+            Title = values[8];
+            YearsOfExperience = int.Parse(values[9]);
 
             //var subjectIds = values[9].Split(',').Select(int.Parse).ToList();
             //Subjects = FetchSubjectsByIds(subjectIds);    Enable when service for this is implemented
