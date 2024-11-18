@@ -7,7 +7,7 @@ namespace SSluzba.Repositories
 {
     public class ProfessorRepository
     {
-        private readonly string FilePath = @"D:" + Path.DirectorySeparatorChar + "Github" + Path.DirectorySeparatorChar + "oisisi2024" + Path.DirectorySeparatorChar + "SSluzba" + Path.DirectorySeparatorChar + "Data" + Path.DirectorySeparatorChar + "professors.csv";
+        private readonly string FilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", "Data", "professors.csv");
 
         public List<Professor> LoadProfessors()
         {

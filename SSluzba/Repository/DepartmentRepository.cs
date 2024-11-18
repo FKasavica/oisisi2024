@@ -7,7 +7,7 @@ namespace SSluzba.Repositories
 {
     public class DepartmentRepository
     {
-        private readonly string FilePath = @"D:" + Path.DirectorySeparatorChar + "Github" + Path.DirectorySeparatorChar + "oisisi2024" + Path.DirectorySeparatorChar + "SSluzba" + Path.DirectorySeparatorChar + "Data" + Path.DirectorySeparatorChar + "departments.csv";
+        private readonly string FilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", "Data", "departments.csv");
 
         public List<Department> LoadDepartments()
         {

@@ -7,7 +7,7 @@ namespace SSluzba.Repositories
 {
     public class SubjectRepository
     {
-        private readonly string FilePath = @"D:" + Path.DirectorySeparatorChar + "Github" + Path.DirectorySeparatorChar + "oisisi2024" + Path.DirectorySeparatorChar + "SSluzba" + Path.DirectorySeparatorChar + "Data" + Path.DirectorySeparatorChar + "subjects.csv";
+        private readonly string FilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", "Data", "subjects.csv");
 
         public List<Subject> LoadSubjects()
         {

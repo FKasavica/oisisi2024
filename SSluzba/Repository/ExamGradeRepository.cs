@@ -7,7 +7,7 @@ namespace SSluzba.Repositories
 {
     public class ExamGradeRepository
     {
-        private readonly string FilePath = @"D:" + Path.DirectorySeparatorChar + "Github" + Path.DirectorySeparatorChar + "oisisi2024" + Path.DirectorySeparatorChar + "SSluzba" + Path.DirectorySeparatorChar + "Data" + Path.DirectorySeparatorChar + "exam_grades.csv";
+        private readonly string FilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", "Data", "exam_grades.csv");
 
         public List<ExamGrade> LoadExamGrades()
         {
