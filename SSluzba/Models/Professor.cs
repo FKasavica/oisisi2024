@@ -56,7 +56,19 @@ namespace SSluzba.Models
             }
         }
 
-        //Address, class needed
+        private int _addressId;
+        public int AddressId
+        {
+            get => _addressId;
+            set
+            {
+                if (value != _addressId)
+                {
+                    _addressId = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         private string _phoneNumber;
         public string PhoneNumber
@@ -147,7 +159,7 @@ namespace SSluzba.Models
             _subjects = new List<Subject>();
         }
 
-        public Professor(int id, string surname, string name, DateTime dateOfBirth, string phoneNumber, string email, string personalIdNumber, string title, int yearsOfExperience, List<Subject> subjects)
+        public Professor(int id, string surname, string name, DateTime dateOfBirth, string phoneNumber, string email, string personalIdNumber, string title, int yearsOfExperience, List<Subject> subjects, int addressId)
         {
             Id = id;
             Surname = surname;
@@ -159,6 +171,7 @@ namespace SSluzba.Models
             Title = title;
             YearsOfExperience = yearsOfExperience;
             Subjects = subjects;
+            AddressId = addressId;
         }
 
         public string[] ToCSV()
@@ -174,7 +187,8 @@ namespace SSluzba.Models
                 PersonalIdNumber,
                 Title,
                 YearsOfExperience.ToString(),
-                string.Join(", ", Subjects.Select(s => s.Id))
+                string.Join(", ", Subjects.Select(s => s.Id)),
+                AddressId.ToString()
             };
             return csvValues;
         }
@@ -190,6 +204,7 @@ namespace SSluzba.Models
             PersonalIdNumber = values[6];
             Title = values[7];
             YearsOfExperience = int.Parse(values[8]);
+            AddressId = int.Parse(values[9]);
 
             //var subjectIds = values[9].Split(',').Select(int.Parse).ToList();
             //Subjects = FetchSubjectsByIds(subjectIds);    Enable when service for this is implemented
@@ -200,7 +215,8 @@ namespace SSluzba.Models
             return $"ID: {Id}, Name: {Name} {Surname}, Date of Birth: {DateOfBirth:yyyy-MM-dd}, " +
                    $"Phone: {PhoneNumber}, Email: {Email}, Personal ID: {PersonalIdNumber}, " +
                    $"Title: {Title}, Experience: {YearsOfExperience} years, " +
-                   $"Subjects: {string.Join(", ", Subjects.Select(s => s.Name))}";
+                   $"Subjects: {string.Join(", ", Subjects.Select(s => s.Name))}, " +
+                   $"AddressId: {AddressId}";
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -46,6 +46,7 @@ namespace SSluzba.DAO
                 existingProfessor.Title = updatedProfessor.Title;
                 existingProfessor.YearsOfExperience = updatedProfessor.YearsOfExperience;
                 existingProfessor.Subjects = updatedProfessor.Subjects;
+                existingProfessor.AddressId = updatedProfessor.AddressId;
                 _repository.SaveProfessors(_professors);
                 NotifyObservers();
             }

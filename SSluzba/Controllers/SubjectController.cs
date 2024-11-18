@@ -99,6 +99,11 @@ namespace SSluzba.Controllers
             }
         }
 
+        public List<Subject> GetSubjectsByProfessorId(int professorId)
+        {
+            return _subjectDAO.GetAll().FindAll(subject => subject.ProfessorId == professorId);
+        }
+
         public List<Student> GetStudentsWhoPassed(int subjectId)
         {
             var studentSubjects = _studentSubjectController.GetStudentsBySubjectId(subjectId)
