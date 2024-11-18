@@ -18,20 +18,17 @@ namespace SSluzba.Views.Professor
             _controller = new ProfessorController();
             _addressController = new AddressController();
 
-            LoadAddresses();  // Load the addresses into the combo box
+            LoadAddresses();
         }
 
-        // Load all addresses into the combo box
         private void LoadAddresses()
         {
             var addresses = _addressController.GetAllAddresses();
             AddressComboBox.ItemsSource = addresses;
         }
 
-        // Event handler for the "Add Professor" button click
         private void OkButton_Click(object sender, RoutedEventArgs e)
         {
-            // Validate inputs
             if (string.IsNullOrEmpty(SurnameInput.Text) ||
                 string.IsNullOrEmpty(NameInput.Text) ||
                 DateOfBirthInput.SelectedDate == null ||
@@ -48,7 +45,6 @@ namespace SSluzba.Views.Professor
 
             try
             {
-                // Create a new professor using the controller
                 _professor = _controller.CreateNewProfessor(
                     SurnameInput.Text,
                     NameInput.Text,
@@ -59,24 +55,22 @@ namespace SSluzba.Views.Professor
                     TitleInput.Text,
                     int.Parse(YearsOfExperienceInput.Text),
                     ((Address)AddressComboBox.SelectedItem).Id,
-                    new List<SSluzba.Models.Subject>() // Assuming no subjects are selected by default
+                    new List<SSluzba.Models.Subject>()
                 );
 
-                DialogResult = true;  // Indicate success
-                Close();  // Close the window
+                DialogResult = true;
+                Close();
             }
             catch (Exception ex)
             {
-                // Show an error message if something goes wrong
                 MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
-        // Event handler for the "Cancel" button click
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
-            DialogResult = false;  // Indicate that the user cancelled
-            Close();  // Close the window
+            DialogResult = false;
+            Close();
         }
     }
 }

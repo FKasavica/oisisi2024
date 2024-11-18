@@ -12,34 +12,49 @@ namespace SSluzba.Views
         {
             InitializeComponent();
 
-            // Popunjavanje polja sa podacima o odeljenju
             if (department != null)
             {
                 Department = department;
                 DepartmentCodeInput.Text = department.DepartmentCode;
-                DepartmentCodeInput.IsReadOnly = true;
+                DepartmentCodeInput.IsReadOnly = false;
                 DepartmentNameInput.Text = department.DepartmentName;
                 HeadOfDepartmentIdInput.Text = department.HeadOfDepartmentId.ToString();
-                HeadOfDepartmentIdInput.IsReadOnly = true;
+                HeadOfDepartmentIdInput.IsReadOnly = false;
                 ProfessorIdListInput.Text = string.Join(", ", department.ProfessorIdList);
-                ProfessorIdListInput.IsReadOnly = true;
+                ProfessorIdListInput.IsReadOnly = false;
             }
         }
 
         private void OkButton_Click(object sender, RoutedEventArgs e)
         {
-            // Validacija unosa
-            if (string.IsNullOrWhiteSpace(DepartmentNameInput.Text))
+            try
             {
-                MessageBox.Show("Please fill in all fields correctly.", "Input Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
+                if (string.IsNullOrWhiteSpace(DepartmentNameInput.Text))
+                {
+                    MessageBox.Show("Please fill in all fields correctly.", "Input Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+                Department.DepartmentName = DepartmentNameInput.Text;
+
+                var professorIdsInput = ProfessorIdListInput.Text;
+                if (!string.IsNullOrWhiteSpace(professorIdsInput))
+                {
+                    Department.ProfessorIdList = professorIdsInput.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                                                                  .Select(id => int.TryParse(id.Trim(), out var idValue) ? idValue : 0)
+                                                                  .Where(id => id != 0)
+                                                                  .ToList();
+                }
+
+                Department.HeadOfDepartmentId = int.Parse(HeadOfDepartmentIdInput.Text);
+
+                DialogResult = true;
+                Close();
             }
-
-            // Ažuriranje podataka o odeljenju
-            Department.DepartmentName = DepartmentNameInput.Text;
-
-            DialogResult = true;
-            Close();
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)

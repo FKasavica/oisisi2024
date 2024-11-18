@@ -13,7 +13,7 @@
             <Label Content="Head of Department ID:" />
             <TextBox x:Name="HeadOfDepartmentIdInput" Width="200" IsReadOnly="True" />
 
-            <Label Content="Professor IDs (comma-separated):" />
+            <Label Content="Professor IDs (*will be converted to name*):" />
             <TextBox x:Name="ProfessorIdListInput" Width="200" IsReadOnly="True" />
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">

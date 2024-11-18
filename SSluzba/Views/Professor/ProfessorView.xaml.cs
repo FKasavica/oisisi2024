@@ -29,7 +29,6 @@ namespace SSluzba.Views.Professor
 
         public void Update()
         {
-            // Refresh the professor list when an update occurs
             RefreshProfessorList();
         }
 
@@ -37,7 +36,6 @@ namespace SSluzba.Views.Professor
         {
             var currentDetails = _controller.GetAllProfessors();
 
-            // Remove items that no longer exist
             for (int i = _professorDetails.Count - 1; i >= 0; i--)
             {
                 if (!currentDetails.Contains(_professorDetails[i]))
@@ -46,7 +44,6 @@ namespace SSluzba.Views.Professor
                 }
             }
 
-            // Add new or updated items
             foreach (var detail in currentDetails)
             {
                 if (!_professorDetails.Contains(detail))
@@ -73,13 +70,11 @@ namespace SSluzba.Views.Professor
                 var selectedProfessor = ProfessorListView.SelectedItem;
                 int professorId = (int)selectedProfessor.GetType().GetProperty("Id").GetValue(selectedProfessor);
 
-                // Open the Update Professor View with the selected professor's ID
                 var updateProfessorView = new UpdateProfessorView(professorId);
                 var result = updateProfessorView.ShowDialog();
 
                 if (result == true)
                 {
-                    // If the professor was updated, refresh the list of professors
                     RefreshProfessorList();
                 }
             }
@@ -100,7 +95,7 @@ namespace SSluzba.Views.Professor
                 if (professorToDelete != null)
                 {
                     _controller.DeleteProfessor(professorToDelete.Id);
-                    _professorDetails.Remove(selectedProfessor); // Remove from collection
+                    _professorDetails.Remove(selectedProfessor);
                 }
                 else
                 {

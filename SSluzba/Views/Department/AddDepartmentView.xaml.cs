@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using SSluzba.Models;
 using SSluzba.Controllers;
-using System.Collections.Generic;
 
 namespace SSluzba.Views
 {
@@ -10,7 +11,7 @@ namespace SSluzba.Views
     {
         public Department Department { get; private set; }
 
-        public AddDepartmentView() : base()
+        public AddDepartmentView()
         {
             InitializeComponent();
             PopulateReadOnlyFields();
@@ -18,13 +19,8 @@ namespace SSluzba.Views
 
         private void PopulateReadOnlyFields()
         {
-            DepartmentController controller = new DepartmentController();
-            List<Department> allDepartments = controller.GetAllDepartments();
-            int maxId = allDepartments.Count > 0 ? allDepartments[^1].Id : 0;
-            HeadOfDepartmentIdInput.Text = "Auto-Generated";
-            HeadOfDepartmentIdInput.IsReadOnly = true;
-            ProfessorIdListInput.Text = "Auto-Generated";
-            ProfessorIdListInput.IsReadOnly = true;
+            HeadOfDepartmentIdInput.IsReadOnly = false;
+            ProfessorIdListInput.IsReadOnly = false;
         }
 
         private int GetNextDepartmentId()
@@ -37,22 +33,46 @@ namespace SSluzba.Views
 
         private void OkButton_Click(object sender, RoutedEventArgs e)
         {
-            // Validacija unosa
             if (string.IsNullOrWhiteSpace(DepartmentNameInput.Text) || string.IsNullOrWhiteSpace(DepartmentCodeInput.Text))
             {
                 MessageBox.Show("Please fill in all fields correctly.", "Input Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
-            // Automatsko generisanje ID-a za novo odeljenje
             int newId = GetNextDepartmentId();
 
-            // Kreiranje novog odeljenja
+            int headOfDepartmentId;
+            if (!int.TryParse(HeadOfDepartmentIdInput.Text, out headOfDepartmentId))
+            {
+                MessageBox.Show("Invalid Head of Department ID.", "Input Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            List<int> professorIds = new List<int>();
+            if (!string.IsNullOrWhiteSpace(ProfessorIdListInput.Text))
+            {
+                var professorIdStrings = ProfessorIdListInput.Text.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                foreach (var idStr in professorIdStrings)
+                {
+                    if (int.TryParse(idStr.Trim(), out var professorId))
+                    {
+                        professorIds.Add(professorId);
+                    }
+                    else
+                    {
+                        MessageBox.Show($"Invalid Professor ID: {idStr}", "Input Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+                }
+            }
+
             Department = new Department
             {
                 Id = newId,
                 DepartmentCode = DepartmentCodeInput.Text,
-                DepartmentName = DepartmentNameInput.Text
+                DepartmentName = DepartmentNameInput.Text,
+                HeadOfDepartmentId = headOfDepartmentId,
+                ProfessorIdList = professorIds
             };
 
             DialogResult = true;

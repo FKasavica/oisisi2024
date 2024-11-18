@@ -15,12 +15,10 @@ namespace SSluzba.Views.Professor
             InitializeComponent();
             _controller = new ProfessorController();
 
-            // Fetch the professor data based on the ID
             Professor = _controller.GetProfessorById(professorId);
 
             if (Professor != null)
             {
-                // Set the UI elements to the professor's current data
                 SurnameInput.Text = Professor.Surname;
                 NameInput.Text = Professor.Name;
                 DateOfBirthInput.SelectedDate = Professor.DateOfBirth;
@@ -40,7 +38,6 @@ namespace SSluzba.Views.Professor
         {
             try
             {
-                // Update the professor with the new details
                 Professor = _controller.UpdateProfessor(
                     Professor.Id,
                     SurnameInput.Text,
@@ -52,7 +49,7 @@ namespace SSluzba.Views.Professor
                     TitleInput.Text,
                     int.Parse(YearsOfExperienceInput.Text),
                     ((Address)AddressComboBox.SelectedItem).Id,
-                    new List<SSluzba.Models.Subject>()  //ovde obratiti paznju, ne moze da bude ova prazna lista inace pukne
+                    new List<SSluzba.Models.Subject>()
                 );
 
                 MessageBox.Show("Professor updated successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
