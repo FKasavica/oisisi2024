@@ -95,7 +95,7 @@ namespace SSluzba.Models
                 Id.ToString(),
                 StudentId.ToString(),
                 SubjectId.ToString(),
-                NumericGrade.ToString(),
+                Math.Round(NumericGrade).ToString(), // Zaokružujemo na najbliži ceo broj
                 ExamDate.ToString("yyyy-MM-dd")
             };
             return csvValues;
@@ -106,9 +106,10 @@ namespace SSluzba.Models
             Id = int.Parse(values[0]);
             StudentId = int.Parse(values[1]);
             SubjectId = int.Parse(values[2]);
-            NumericGrade = double.Parse(values[3], System.Globalization.CultureInfo.InvariantCulture);
+            NumericGrade = Math.Round(double.Parse(values[3], System.Globalization.CultureInfo.InvariantCulture)); // Zaokružujemo na najbliži ceo broj
             ExamDate = DateTime.ParseExact(values[4], "yyyy-MM-dd", null);
         }
+
 
         public override string ToString()
         {

@@ -89,7 +89,8 @@ namespace SSluzba.Controllers
                 var index = _indexController.GetIndexById(student.IndexId);
                 string indexString = index != null ? index.ToString() : "Index not found";
 
-                var averageGrade = _examGradeController.GetAverageGrade(student.Id);
+                var averageGrade = Math.Round(_examGradeController.GetAverageGrade(student.Id), 2);
+
 
                 studentDetails.Add(new
                 {

@@ -193,5 +193,89 @@ namespace SSluzba.Views.Student
                 FailedSubjectsListView.ItemsSource = failedSubjects;
             }
         }
+
+        private void RemoveGradeButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (PassedSubjectsListView.SelectedItem is not null)
+            {
+                var selectedSubject = PassedSubjectsListView.SelectedItem;
+                int subjectId = (int)selectedSubject.GetType().GetProperty("Id").GetValue(selectedSubject);
+                int studentId = GetSelectedStudentId();
+
+                var examGrade = _examGradeController.GetExamGradeByStudentAndSubject(studentId, subjectId);
+                if (examGrade != null)
+                {
+                    _examGradeController.DeleteExamGrade(examGrade.Id);
+                    RefreshSubjectListsForStudent(studentId);
+                }
+                else
+                {
+                    MessageBox.Show("No grade found to remove.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select a subject from passed subjects.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void ChangeGradeButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (PassedSubjectsListView.SelectedItem is not null)
+            {
+                var selectedSubject = PassedSubjectsListView.SelectedItem;
+                int subjectId = (int)selectedSubject.GetType().GetProperty("Id").GetValue(selectedSubject);
+                int studentId = GetSelectedStudentId();
+
+                var examGrade = _examGradeController.GetExamGradeByStudentAndSubject(studentId, subjectId);
+                if (examGrade != null)
+                {
+                    _examGradeController.OpenUpdateExamGradeView(examGrade);
+                    RefreshSubjectListsForStudent(studentId);
+                }
+                else
+                {
+                    MessageBox.Show("No grade found to change.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select a subject from passed subjects.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void AddGradeButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (FailedSubjectsListView.SelectedItem is not null)
+            {
+                var selectedSubject = FailedSubjectsListView.SelectedItem;
+                int subjectId = (int)selectedSubject.GetType().GetProperty("Id").GetValue(selectedSubject);
+                int studentId = GetSelectedStudentId();
+
+                _examGradeController.OpenAddExamGradeView(studentId, subjectId);
+                RefreshSubjectListsForStudent(studentId);
+            }
+            else
+            {
+                MessageBox.Show("Please select a subject from failed subjects.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private int GetSelectedStudentId()
+        {
+            if (StudentListView.SelectedItem is not null)
+            {
+                var selectedStudent = StudentListView.SelectedItem;
+                return (int)selectedStudent.GetType().GetProperty("Id").GetValue(selectedStudent);
+            }
+            return -1; // Invalid ID if no student is selected
+        }
+
+        private void RefreshSubjectListsForStudent(int studentId)
+        {
+            // Logic to refresh passed and failed subject lists for the selected student
+            StudentListView_SelectionChanged(null, null);
+        }
+
     }
 }

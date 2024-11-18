@@ -33,7 +33,7 @@ namespace SSluzba.Views
 
         private void AddExamGradeButton_Click(object sender, RoutedEventArgs e)
         {
-            _examGradeController.OpenAddExamGradeView();
+            //_examGradeController.OpenAddExamGradeView();
         }
 
         private void UpdateExamGradeButton_Click(object sender, RoutedEventArgs e)

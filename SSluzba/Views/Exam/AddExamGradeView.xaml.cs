@@ -1,24 +1,42 @@
 ﻿using System;
 using System.Windows;
 using SSluzba.Models;
+using SSluzba.Controllers;
 
 namespace SSluzba.Views
 {
     public partial class AddExamGradeView : Window
     {
         public ExamGrade ExamGrade { get; private set; }
+        private readonly ExamGradeController _examGradeController;
 
-        public AddExamGradeView()
+        public AddExamGradeView(int studentId, int subjectId)
         {
             InitializeComponent();
+
+            // Inicijalizacija kontrolera
+            _examGradeController = new ExamGradeController();
+
+            // Postavi početne vrednosti
+            StudentIdInput.Text = studentId.ToString();
+            SubjectIdInput.Text = subjectId.ToString();
+
+            // Zaključaj polja za uređivanje ID-ova jer su već definisani
+            StudentIdInput.IsEnabled = false;
+            SubjectIdInput.IsEnabled = false;
+
+            // Inicijalizuj praznu ocenu
+            ExamGrade = new ExamGrade
+            {
+                StudentId = studentId,
+                SubjectId = subjectId
+            };
         }
 
         private void OkButton_Click(object sender, RoutedEventArgs e)
         {
-            // Validacija unosa
-            if (!int.TryParse(StudentIdInput.Text, out int studentId) ||
-                !int.TryParse(SubjectIdInput.Text, out int subjectId) ||
-                !double.TryParse(NumericGradeInput.Text, out double numericGrade) ||
+            // Validacija unosa za ocenu i datum
+            if (!double.TryParse(NumericGradeInput.Text, out double numericGrade) ||
                 ExamDateInput.SelectedDate == null)
             {
                 MessageBox.Show("Please fill in all fields correctly.", "Input Error", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -31,14 +49,12 @@ namespace SSluzba.Views
                 return;
             }
 
-            // Kreiranje nove ocene
-            ExamGrade = new ExamGrade
-            {
-                StudentId = studentId,
-                SubjectId = subjectId,
-                NumericGrade = numericGrade,
-                ExamDate = ExamDateInput.SelectedDate.Value
-            };
+            // Ažuriranje ocene
+            ExamGrade.NumericGrade = numericGrade;
+            ExamGrade.ExamDate = ExamDateInput.SelectedDate.Value;
+
+            // Koristi kontroler za dodavanje ocene u skladište (DAO)
+            _examGradeController.AddExamGrade(ExamGrade);
 
             DialogResult = true;
             Close();

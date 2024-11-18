@@ -53,17 +53,16 @@ namespace SSluzba.Controllers
             _examGradeDAO.Delete(id);
         }
 
-        // Dodavanje metode za otvaranje pogleda za dodavanje ocene
-        public void OpenAddExamGradeView()
+        public void OpenAddExamGradeView(int studentId, int subjectId)
         {
-            var addExamGradeWindow = new AddExamGradeView();
+            var addExamGradeWindow = new AddExamGradeView(studentId, subjectId);
             if (addExamGradeWindow.ShowDialog() == true)
             {
                 AddExamGrade(addExamGradeWindow.ExamGrade);
             }
         }
 
-        // Dodavanje metode za otvaranje pogleda za ažuriranje ocene
+
         public void OpenUpdateExamGradeView(ExamGrade examGrade)
         {
             var updateExamGradeWindow = new UpdateExamGradeView(examGrade);
