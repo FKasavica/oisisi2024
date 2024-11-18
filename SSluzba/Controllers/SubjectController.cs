@@ -181,5 +181,52 @@ namespace SSluzba.Controllers
             updateSubjectWindow.ShowDialog();
         }
 
+        public void MoveStudentToPassed(int studentId, int subjectId)
+        {
+            var studentSubjects = _studentSubjectController.GetStudentsBySubjectId(subjectId)
+                .Where(ss => ss.StudentId == studentId).ToList();
+
+            foreach (var studentSubject in studentSubjects)
+            {
+                studentSubject.Passed = true;
+                _studentSubjectController.UpdateStudentSubject(studentSubject);
+            }
+        }
+
+        public void MoveStudentToFailed(int studentId, int subjectId)
+        {
+            var studentSubjects = _studentSubjectController.GetStudentsBySubjectId(subjectId)
+                .Where(ss => ss.StudentId == studentId).ToList();
+
+            foreach (var studentSubject in studentSubjects)
+            {
+                studentSubject.Passed = false;
+                _studentSubjectController.UpdateStudentSubject(studentSubject);
+            }
+        }
+
+        public void AddStudentToSubject(int studentId, int subjectId)
+        {
+            var studentSubject = new StudentSubject
+            {
+                StudentId = studentId,
+                SubjectId = subjectId,
+                Passed = false // Default to 'failed' status initially
+            };
+            _studentSubjectController.AddStudentSubject(studentSubject);
+        }
+
+        public void RemoveStudentFromSubject(int studentId, int subjectId)
+        {
+            var studentSubjects = _studentSubjectController.GetStudentsBySubjectId(subjectId)
+                .Where(ss => ss.StudentId == studentId).ToList();
+
+            foreach (var studentSubject in studentSubjects)
+            {
+                _studentSubjectController.DeleteStudentSubject(studentSubject.Id);
+            }
+        }
+
+
     }
 }

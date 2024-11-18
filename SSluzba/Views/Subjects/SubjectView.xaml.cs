@@ -1,4 +1,5 @@
 ﻿using SSluzba.Controllers;
+using SSluzba.Models;
 using SSluzba.Observer;
 using SSluzba.Views.Subjects;
 using System.Collections.ObjectModel;
@@ -10,6 +11,7 @@ namespace SSluzba.Views.Subject
     {
         private readonly SubjectController _controller;
         private ObservableCollection<dynamic> _subjectDetails;
+        private readonly StudentSubjectController _studentSubjectController = new();
 
         public SubjectView()
         {
@@ -130,6 +132,116 @@ namespace SSluzba.Views.Subject
                 FailedStudentsListView.ItemsSource = failedStudents;
             }
         }
+
+        private void MoveStudentToPassedButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (SubjectListView.SelectedItem is null)
+            {
+                MessageBox.Show("Please select a subject first.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            var selectedSubject = SubjectListView.SelectedItem;
+            int subjectId = (int)selectedSubject.GetType().GetProperty("Id").GetValue(selectedSubject);
+
+            if (FailedStudentsListView.SelectedItem is not null)
+            {
+                var selectedStudent = FailedStudentsListView.SelectedItem;
+                int studentId = (int)selectedStudent.GetType().GetProperty("Id").GetValue(selectedStudent);
+
+                _controller.MoveStudentToPassed(studentId, subjectId);
+                RefreshSubjectList(); // Refresh to reflect changes
+            }
+            else
+            {
+                MessageBox.Show("Please select a student from the 'Failed' list to move.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void MoveStudentToFailedButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (SubjectListView.SelectedItem is null)
+            {
+                MessageBox.Show("Please select a subject first.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            var selectedSubject = SubjectListView.SelectedItem;
+            int subjectId = (int)selectedSubject.GetType().GetProperty("Id").GetValue(selectedSubject);
+
+            if (PassedStudentsListView.SelectedItem is not null)
+            {
+                var selectedStudent = PassedStudentsListView.SelectedItem;
+                int studentId = (int)selectedStudent.GetType().GetProperty("Id").GetValue(selectedStudent);
+
+                _controller.MoveStudentToFailed(studentId, subjectId);
+                RefreshSubjectList(); // Refresh to reflect changes
+            }
+            else
+            {
+                MessageBox.Show("Please select a student from the 'Passed' list to move.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void AddStudentToSubjectButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (SubjectListView.SelectedItem is null)
+            {
+                MessageBox.Show("Please select a subject first.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            // Retrieve selected subject
+            var selectedSubject = SubjectListView.SelectedItem;
+            int subjectId = (int)selectedSubject.GetType().GetProperty("Id").GetValue(selectedSubject);
+
+            // Prompt for a student ID or implement a way to get it
+            string input = Microsoft.VisualBasic.Interaction.InputBox("Enter the ID of the student to add:", "Add Student", "0");
+            if (int.TryParse(input, out int studentId) && studentId > 0)
+            {
+                _controller.AddStudentToSubject(studentId, subjectId);
+
+                // Refresh both passed and failed student lists after the operation
+                //RefreshStudentLists(subjectId);
+            }
+            else
+            {
+                MessageBox.Show("Invalid student ID entered.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+
+
+        private void RemoveStudentFromSubjectButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (SubjectListView.SelectedItem is null)
+            {
+                MessageBox.Show("Please select a subject first.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            // Retrieve selected subject
+            var selectedSubject = SubjectListView.SelectedItem;
+            int subjectId = (int)selectedSubject.GetType().GetProperty("Id").GetValue(selectedSubject);
+
+            // Check which ListView the selected student belongs to
+            if (PassedStudentsListView.SelectedItem is Models.Student selectedPassedStudent)
+            {
+                _controller.RemoveStudentFromSubject(selectedPassedStudent.Id, subjectId);
+            }
+            else if (FailedStudentsListView.SelectedItem is Models.Student selectedFailedStudent)
+            {
+                _controller.RemoveStudentFromSubject(selectedFailedStudent.Id, subjectId);
+            }
+            else
+            {
+                MessageBox.Show("Please select a student to remove.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+            // Refresh both passed and failed student lists after the operation
+           // RefreshStudentLists(subjectId);
+        }
+
 
     }
 }
