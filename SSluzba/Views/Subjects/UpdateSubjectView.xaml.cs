@@ -44,7 +44,7 @@ namespace SSluzba.Views.Subjects
         {
             try
             {
-                var selectedProfessor = ProfessorComboBox.SelectedItem as Professor;
+                var selectedProfessor = ProfessorComboBox.SelectedItem as Models.Professor;
                 var semester = SemesterInput.SelectedItem is ComboBoxItem selectedItem
                     ? (Semester)Enum.Parse(typeof(Semester), selectedItem.Content.ToString())
                     : Subject.Semester;

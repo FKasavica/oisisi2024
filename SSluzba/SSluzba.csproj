@@ -9,13 +9,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Views\Professor\**" />
     <Compile Remove="Views\Subject\**" />
-    <EmbeddedResource Remove="Views\Professor\**" />
     <EmbeddedResource Remove="Views\Subject\**" />
-    <None Remove="Views\Professor\**" />
     <None Remove="Views\Subject\**" />
-    <Page Remove="Views\Professor\**" />
     <Page Remove="Views\Subject\**" />
   </ItemGroup>
 

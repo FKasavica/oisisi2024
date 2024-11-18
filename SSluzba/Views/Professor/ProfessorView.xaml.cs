@@ -72,22 +72,15 @@ namespace SSluzba.Views.Professor
             {
                 var selectedProfessor = ProfessorListView.SelectedItem;
                 int professorId = (int)selectedProfessor.GetType().GetProperty("Id").GetValue(selectedProfessor);
-                var professorToUpdate = _controller.GetProfessorById(professorId);
 
-                if (professorToUpdate != null)
+                // Open the Update Professor View with the selected professor's ID
+                var updateProfessorView = new UpdateProfessorView(professorId);
+                var result = updateProfessorView.ShowDialog();
+
+                if (result == true)
                 {
-                    _controller.OpenUpdateProfessorView(professorToUpdate);
-                    // Refresh the updated professor
-                    var updatedProfessorDetail = _controller.GetProfessorDetails(professorId);
-                    int index = _professorDetails.IndexOf(selectedProfessor);
-                    if (index >= 0)
-                    {
-                        _professorDetails[index] = updatedProfessorDetail;
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Could not find the selected professor for updating.", "Update Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    // If the professor was updated, refresh the list of professors
+                    RefreshProfessorList();
                 }
             }
             else

@@ -1,0 +1,33 @@
+﻿<Window x:Class="SSluzba.Views.Professor.UpdateProfessorView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Update Professor" Height="450" Width="400">
+    <Window.Resources>
+        <Style TargetType="TextBox">
+            <Style.Triggers>
+                <Trigger Property="IsFocused" Value="True">
+                    <Setter Property="Foreground" Value="Black"/>
+                </Trigger>
+                <Trigger Property="Text" Value="">
+                    <Setter Property="Foreground" Value="Gray"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <StackPanel>
+            <TextBox x:Name="SurnameInput" Margin="10" Text="Surname" Foreground="Gray" />
+            <TextBox x:Name="NameInput" Margin="10" Text="Name" Foreground="Gray" />
+            <DatePicker x:Name="DateOfBirthInput" Margin="10" />
+            <TextBox x:Name="PhoneNumberInput" Margin="10" Text="Phone Number" Foreground="Gray" />
+            <TextBox x:Name="EmailInput" Margin="10" Text="Email" Foreground="Gray" />
+            <TextBox x:Name="PersonalIdNumberInput" Margin="10" Text="Personal ID Number" Foreground="Gray" />
+            <TextBox x:Name="TitleInput" Margin="10" Text="Title" Foreground="Gray" />
+            <TextBox x:Name="YearsOfExperienceInput" Margin="10" Text="Years of Experience" Foreground="Gray" />
+            <ComboBox x:Name="AddressComboBox" Margin="10" DisplayMemberPath="Address" />
+            <Button x:Name="OkButton" Content="Save" Margin="10" Click="OkButton_Click"/>
+            <Button x:Name="CancelButton" Content="Cancel" Margin="10" Click="CancelButton_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

@@ -2,7 +2,7 @@
 using SSluzba.Views.Student;
 using SSluzba.Views.Subject;
 //using SSluzba.Views.Department;
-//using SSluzba.Views.Professor;
+using SSluzba.Views.Professor;
 using System;
 using System.Windows;
 
@@ -23,8 +23,8 @@ namespace SSluzba
 
         private void ManageProfessorsButton_Click(object sender, RoutedEventArgs e)
         {
-            //ProfessorView professorView = new ProfessorView();
-            //professorView.Show();
+            ProfessorView professorView = new ProfessorView();
+            professorView.Show();
         }
 
         private void ManageSubjectsButton_Click(object sender, RoutedEventArgs e)

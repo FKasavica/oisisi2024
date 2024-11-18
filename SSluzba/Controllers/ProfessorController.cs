@@ -105,7 +105,11 @@ namespace SSluzba.Controllers
             return existingProfessor;
         }
 
-        // Delete a professor
+        public void AddProfessor(Professor professor)
+        {
+            _professorDAO.Add(professor);
+        }
+
         public void DeleteProfessor(int professorId)
         {
             var professorToDelete = GetProfessorById(professorId);

@@ -1,0 +1,49 @@
+﻿<Window x:Class="SSluzba.Views.Professor.AddProfessorView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Add Professor"
+        Height="450" Width="450">
+    <Grid>
+        <!-- Surname Label and TextBox -->
+        <Label Content="Surname" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,10,0,0"/>
+        <TextBox x:Name="SurnameInput" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="100,10,10,0" Width="260" Height="30"/>
+
+        <!-- Name Label and TextBox -->
+        <Label Content="Name" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,50,0,0"/>
+        <TextBox x:Name="NameInput" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="100,50,10,0" Width="260" Height="30"/>
+
+        <!-- Date of Birth Label and DatePicker -->
+        <Label Content="Date of Birth" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,90,0,0"/>
+        <DatePicker x:Name="DateOfBirthInput" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="100,90,10,0" Width="260"/>
+
+        <!-- Phone Number Label and TextBox -->
+        <Label Content="Phone Number" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,130,0,0"/>
+        <TextBox x:Name="PhoneNumberInput" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="100,130,10,0" Width="260" Height="30"/>
+
+        <!-- Email Label and TextBox -->
+        <Label Content="Email" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,170,0,0"/>
+        <TextBox x:Name="EmailInput" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="100,170,10,0" Width="260" Height="30"/>
+
+        <!-- Personal ID Number Label and TextBox -->
+        <Label Content="Personal ID Number" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,210,0,0"/>
+        <TextBox x:Name="PersonalIdNumberInput" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="100,210,10,0" Width="260" Height="30"/>
+
+        <!-- Title Label and TextBox -->
+        <Label Content="Title" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,250,0,0"/>
+        <TextBox x:Name="TitleInput" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="100,250,10,0" Width="260" Height="30"/>
+
+        <!-- Years of Experience Label and TextBox -->
+        <Label Content="Years of Experience" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,290,0,0"/>
+        <TextBox x:Name="YearsOfExperienceInput" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="100,290,10,0" Width="260" Height="30"/>
+
+        <!-- Address Label and ComboBox -->
+        <Label Content="Address" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,330,0,0"/>
+        <ComboBox x:Name="AddressComboBox" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="100,330,10,0" Width="260"/>
+
+        <!-- Add Professor Button -->
+        <Button Content="Add Professor" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="150" Height="40" Margin="0,0,10,10" Click="OkButton_Click"/>
+
+        <!-- Cancel Button -->
+        <Button Content="Cancel" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="150" Height="40" Margin="10,0,0,10" Click="CancelButton_Click"/>
+    </Grid>
+</Window>
