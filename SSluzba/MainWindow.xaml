@@ -14,6 +14,7 @@
             <Button Content="Manage Students"  Width="200" Height="40" Click="ManageStudentsButton_Click"/>
             <Button Content="Manage Professors"  Width="200" Height="40" Click="ManageProfessorsButton_Click"/>
             <Button Content="Manage Subjects"  Width="200" Height="40" Click="ManageSubjectsButton_Click"/>
+            <Button Content="Manage Departments"  Width="200" Height="40" Click="ManageDepartmentsButton_Click"/>
         </StackPanel>
     </Grid>
 </Window>

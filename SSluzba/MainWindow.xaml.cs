@@ -1,7 +1,6 @@
 ﻿using SSluzba.Views;
 using SSluzba.Views.Student;
 using SSluzba.Views.Subject;
-//using SSluzba.Views.Department;
 using SSluzba.Views.Professor;
 using System;
 using System.Windows;
@@ -31,6 +30,12 @@ namespace SSluzba
         {
             SubjectView subjectView = new SubjectView();
             subjectView.Show();
+        }
+
+        private void ManageDepartmentsButton_Click(object sender, RoutedEventArgs e)
+        {
+            DepartmentView departmentView = new DepartmentView();
+            departmentView.Show();
         }
     }
 }
