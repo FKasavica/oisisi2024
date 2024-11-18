@@ -1,5 +1,6 @@
 ﻿using SSluzba.Controllers;
 using SSluzba.Observer;
+using SSluzba.Views.Subjects;
 using System.Collections.ObjectModel;
 using System.Windows;
 
@@ -25,10 +26,10 @@ namespace SSluzba.Views.Subject
 
         public void Update()
         {
-            // Refresh or update changes
-            RefreshSubjectList(); // This method handles the update logic for the ObservableCollection
+            RefreshSubjectList(); 
         }
 
+        //TODO: popraviti refresh kada se update napravi
         private void RefreshSubjectList()
         {
             var currentDetails = _controller.GetSubjectDetails();
@@ -54,14 +55,12 @@ namespace SSluzba.Views.Subject
 
         private void AddSubjectButton_Click(object sender, RoutedEventArgs e)
         {
-            //var addSubjectWindow = new AddSubjectView();
-            //if (addSubjectWindow.ShowDialog() == true)
-            //{
-            //    var newSubject = addSubjectWindow.Subject;
-            //    _controller.AddSubject(newSubject);
-            //    // Optionally add directly if desired
-            //    //_subjectDetails.Add(_controller.GetSubjectDetails().Find(s => s.Id == newSubject.Id));
-            //}
+            var addSubjectWindow = new AddSubjectView();
+            if (addSubjectWindow.ShowDialog() == true)
+            {
+                var newSubject = addSubjectWindow.Subject;
+                _controller.AddSubject(newSubject);
+            }
         }
 
         private void UpdateSubjectButton_Click(object sender, RoutedEventArgs e)
@@ -74,8 +73,7 @@ namespace SSluzba.Views.Subject
 
                 if (subjectToUpdate != null)
                 {
-                    //_controller.OpenUpdateSubjectView(subjectToUpdate);
-                    // Refresh the updated element after modification
+                    _controller.OpenUpdateSubjectView(subjectToUpdate);
                     var updatedSubjectDetail = _controller.GetSubjectDetails().Find(s => s.Id == subjectId);
                     int index = _subjectDetails.IndexOf(selectedSubject);
                     if (index >= 0)
@@ -105,7 +103,7 @@ namespace SSluzba.Views.Subject
                 if (subjectToDelete != null)
                 {
                     _controller.DeleteSubject(subjectToDelete.Id);
-                    _subjectDetails.Remove(selectedSubject); // Remove from the collection
+                    _subjectDetails.Remove(selectedSubject); 
                 }
                 else
                 {
@@ -125,11 +123,9 @@ namespace SSluzba.Views.Subject
                 var selectedSubject = SubjectListView.SelectedItem;
                 int subjectId = (int)selectedSubject.GetType().GetProperty("Id").GetValue(selectedSubject);
 
-                // Use your controller logic to fetch the list of students who passed/failed
                 var passedStudents = _controller.GetStudentsWhoPassed(subjectId);
                 var failedStudents = _controller.GetStudentsWhoFailed(subjectId);
 
-                // Update the ListViews for passed and failed students accordingly
                 PassedStudentsListView.ItemsSource = passedStudents;
                 FailedStudentsListView.ItemsSource = failedStudents;
             }

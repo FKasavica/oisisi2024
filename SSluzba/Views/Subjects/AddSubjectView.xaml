@@ -1,0 +1,34 @@
+﻿<Window x:Class="SSluzba.Views.Subjects.AddSubjectView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Add Subject" Height="400" Width="350">
+    <Grid Margin="10">
+        <StackPanel>
+            <Label Content="Code:" />
+            <TextBox x:Name="CodeInput" Width="200" />
+
+            <Label Content="Name:" />
+            <TextBox x:Name="NameInput" Width="200" />
+
+            <Label Content="Semester:" />
+            <ComboBox x:Name="SemesterInput" Width="200">
+                <ComboBoxItem Content="Winter" />
+                <ComboBoxItem Content="Summer" />
+            </ComboBox>
+
+            <Label Content="Study Year:" />
+            <TextBox x:Name="StudyYearInput" Width="200" />
+
+            <Label Content="Professor:" />
+            <ComboBox x:Name="ProfessorComboBox" Width="200" />
+
+            <Label Content="ESPB Points:" />
+            <TextBox x:Name="EspbPointsInput" Width="200" />
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+                <Button Content="OK" Width="80" Margin="5" Click="OkButton_Click" />
+                <Button Content="Cancel" Width="80" Margin="5" Click="CancelButton_Click" />
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>
