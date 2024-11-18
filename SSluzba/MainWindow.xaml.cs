@@ -1,6 +1,8 @@
 ﻿using SSluzba.Views;
 using SSluzba.Views.Student;
 using SSluzba.Views.Subject;
+//using SSluzba.Views.Department;
+//using SSluzba.Views.Professor;
 using System;
 using System.Windows;
 
@@ -21,8 +23,8 @@ namespace SSluzba
 
         private void ManageProfessorsButton_Click(object sender, RoutedEventArgs e)
         {
-            // Ovde kasnije možeš implementirati prozor za upravljanje profesorima
-            MessageBox.Show("Manage Professors feature is not yet implemented.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+            //ProfessorView professorView = new ProfessorView();
+            //professorView.Show();
         }
 
         private void ManageSubjectsButton_Click(object sender, RoutedEventArgs e)
