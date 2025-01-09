@@ -1,0 +1,19 @@
+﻿<Window x:Class="SSluzba.Views.AddressView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Address Management" Height="450" Width="700">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <ListView x:Name="AddressListView" ItemsSource="{Binding Addresses}" DisplayMemberPath="ToString" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionMode="Single" />
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+            <Button Content="Add Address" Width="100" Margin="5" Click="AddAddressButton_Click"/>
+            <Button Content="Update Address" Width="100" Margin="5" Click="UpdateAddressButton_Click"/>
+            <Button Content="Delete Address" Width="100" Margin="5" Click="DeleteAddressButton_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

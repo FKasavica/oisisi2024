@@ -163,7 +163,7 @@ namespace SSluzba.Views.Student
                         var examGrade = _examGradeController.GetExamGradeByStudentAndSubject(studentId, ss.SubjectId);
                         if (examGrade == null)
                         {
-                            MessageBox.Show($"No exam grade found for Student ID: {studentId}, Subject ID: {ss.SubjectId}", "Debug Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                            //MessageBox.Show($"No exam grade found for Student ID: {studentId}, Subject ID: {ss.SubjectId}", "Debug Info", MessageBoxButton.OK, MessageBoxImage.Information);
                         }
                         return new
                         {

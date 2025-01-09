@@ -37,5 +37,11 @@ namespace SSluzba
             DepartmentView departmentView = new DepartmentView();
             departmentView.Show();
         }
+
+        private void ManageAddressesButton_Click(object sender, RoutedEventArgs e)
+        {
+            AddressView addressView = new AddressView();
+            addressView.Show();
+        }
     }
 }
